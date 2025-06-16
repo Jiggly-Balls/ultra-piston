@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 class AbstractHTTPClient(ABC):
     def __init__(self) -> None:
-        self.driver: str = "httpx"
+        self.driver: Optional[str] = None
         self.rate_limit: Optional[Union[int, float]] = None
         self.base_url: Optional[str] = None
         self.headers: Optional[Dict[str, str]] = None
@@ -56,6 +56,10 @@ class AbstractHTTPClient(ABC):
 
 
 class HTTPXClient(AbstractHTTPClient):
+    def __init__(self) -> None:
+        super().__init__()
+        self.driver: str = "httpx"
+
     def get(self, endpoint: str) -> Dict[str, Any]:
         URL: str = self._get_base_url() + endpoint
         HEADERS: Dict[str, str] = self._get_headers()

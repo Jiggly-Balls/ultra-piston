@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib
 from typing import TYPE_CHECKING
 
 from . import __title__, __version__
@@ -23,6 +24,22 @@ class PistonClient:
         **http_client_kwargs: Any,
     ) -> None:
         self._http_client: AbstractHTTPClient = http_client()
+
+        if not self._http_client.driver:
+            raise ValueError(
+                f"No http `driver` was specified of {http_client=}. "
+                f"Please make sure you have specified the value of the `driver` attribute in {http_client}. "
+                "Example: httpx, aiohttp, requests, etc (Enter the one YOU are using)."
+            )
+
+        try:
+            importlib.import_module(self._http_client.driver)
+        except ModuleNotFoundError as error:
+            raise ModuleNotFoundError(
+                f"Couldn't find the specified HTTP driver: {self._http_client.driver} "
+                f"from the passed `{http_client=}`. Please make sure you have installed "
+                f"{self._http_client.driver} before running your project."
+            ) from error
 
         if not base_url.endswith("/"):
             base_url += "/"
