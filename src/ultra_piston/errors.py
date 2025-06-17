@@ -87,7 +87,7 @@ class NotFoundError(ServerError):
     ) -> None:
         status_code = 404
         message = message or (
-            "Unexpected response code received. "
+            "Tried accessing an unkown endpoint. "
             f"status_code={status_code} | endpoint={endpoint}"
         )
 
