@@ -6,6 +6,18 @@ if TYPE_CHECKING:
     from typing import Any, Optional
 
 
+__all__ = (
+    "BasePistonError",
+    "InternalError",
+    "ServerError",
+    "MissingDataError",
+    "TooManyRequests",
+    "InternalServerError",
+    "NotFoundError",
+    "UnexpectedStatusError",
+)
+
+
 class BasePistonError(Exception):
     """The base exception to all ultra-piston errors."""
 
@@ -15,12 +27,15 @@ class InternalError(BaseException):
 
 
 class ServerError(BasePistonError):
-    """Raised for server responses that return a non-200 (error) HTTP status code."""
+    """Raised for server responses that return a non-2xx (error) HTTP status code."""
 
-    def __init__(self, *args: Any, status_code: int) -> None:
+    def __init__(
+        self, *args: Any, endpoint: Optional[str] = None, status_code: int
+    ) -> None:
         super().__init__(*args)
 
-        self.status_code = status_code
+        self.endpoint: Optional[str] = endpoint
+        self.status_code: int = status_code
 
 
 class MissingDataError(InternalError):
@@ -30,11 +45,17 @@ class MissingDataError(InternalError):
 class TooManyRequests(ServerError):
     """Raised due to sending too many requests in a short interval."""
 
-    def __init__(self, message: Optional[str] = None) -> None:
+    def __init__(
+        self, endpoint: Optional[str] = None, message: Optional[str] = None
+    ) -> None:
         status_code = 429
+        message = message or (
+            "Raised due to sending too many requests in a short interval. "
+            f"status_code={status_code} | endpoint={endpoint}."
+        )
         super().__init__(
-            message
-            or f"Raised due to sending too many requests in a short interval. status_code={status_code}.",
+            message,
+            endpoint=endpoint,
             status_code=status_code,
         )
 
@@ -42,11 +63,37 @@ class TooManyRequests(ServerError):
 class InternalServerError(ServerError):
     """Raised due to an issue with the server."""
 
-    def __init__(self, message: Optional[str] = None) -> None:
+    def __init__(
+        self, endpoint: Optional[str] = None, message: Optional[str] = None
+    ) -> None:
         status_code = 500
+        message = message or (
+            "Raised due to an issue with the server. "
+            f"status_code={status_code} | endpoint={endpoint}."
+        )
+
         super().__init__(
-            message
-            or f"Raised due to an issue with the server. status_code={status_code}.",
+            message,
+            endpoint=endpoint,
+            status_code=status_code,
+        )
+
+
+class NotFoundError(ServerError):
+    """Raised when trying to access an unkown endpoint."""
+
+    def __init__(
+        self, endpoint: Optional[str] = None, message: Optional[str] = None
+    ) -> None:
+        status_code = 404
+        message = message or (
+            "Unexpected response code received. "
+            f"status_code={status_code} | endpoint={endpoint}."
+        )
+
+        super().__init__(
+            message,
+            endpoint=endpoint,
             status_code=status_code,
         )
 
@@ -55,10 +102,18 @@ class UnexpectedStatusError(ServerError):
     """Raised for any unkown response status code (non-2xx)."""
 
     def __init__(
-        self, status_code: int, message: Optional[str] = None
+        self,
+        status_code: int,
+        endpoint: Optional[str] = None,
+        message: Optional[str] = None,
     ) -> None:
+        message = message or (
+            "Unexpected response code received. "
+            f"status_code={status_code} | endpoint={endpoint}."
+        )
+
         super().__init__(
-            message
-            or f"Unexpected response code received. status_code={status_code}.",
+            message,
+            endpoint=endpoint,
             status_code=status_code,
         )
