@@ -1,11 +1,6 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
+from typing import List, Optional
 
 from pydantic import BaseModel
-
-if TYPE_CHECKING:
-    from typing import List, Optional
 
 
 class Runtime(BaseModel):
@@ -13,3 +8,9 @@ class Runtime(BaseModel):
     version: str
     aliases: List[str]
     runtime: Optional[str] = None
+
+
+class Package(BaseModel):
+    language: str
+    language_version: str
+    installed: bool
