@@ -108,9 +108,6 @@ class HTTPXClient(AbstractHTTPClient):
         async with httpx.AsyncClient() as client:
             response = await client.get(**payload)
 
-        if response.status_code != 200:
-            print(f"\n{response.status_code=}\n")
-
         return self._validate_response_status(response=response)
 
     def post(
