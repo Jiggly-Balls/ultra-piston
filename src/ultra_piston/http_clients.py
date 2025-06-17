@@ -8,10 +8,17 @@ try:
 except ImportError:
     pass
 
-from .errors import MissingDataError
+from .errors import (
+    InternalServerError,
+    MissingDataError,
+    TooManyRequests,
+    UnexpectedStatusError,
+)
 
 if TYPE_CHECKING:
     from typing import Any, Dict, Optional, Union
+
+    from httpx import Response
 
 
 class AbstractHTTPClient(ABC):
@@ -49,14 +56,10 @@ class AbstractHTTPClient(ABC):
         return {"url": BASE_URL, "headers": HEADERS}
 
     @abstractmethod
-    def get(
-        self, endpoint: str
-    ) -> Any: ...
+    def get(self, endpoint: str) -> Any: ...
 
     @abstractmethod
-    async def get_async(
-        self, endpoint: str
-    ) -> Any: ...
+    async def get_async(self, endpoint: str) -> Any: ...
 
     @abstractmethod
     def post(
@@ -74,21 +77,35 @@ class HTTPXClient(AbstractHTTPClient):
         super().__init__()
         self.driver: str = "httpx"
 
+    def _validate_response_status(self, response: Response) -> Any:
+        if 300 > response.status_code > 199:
+            return response.json()
+
+        elif response.status_code == 429:
+            raise TooManyRequests()
+
+        elif response.status_code == 500:
+            raise InternalServerError()
+
+        else:
+            raise UnexpectedStatusError(response.status_code)
+
     def get(self, endpoint: str) -> Any:
         payload = self._get_http_payload(endpoint)
 
         response = httpx.get(**payload)
-        return response.json()
+        return self._validate_response_status(response=response)
 
-    async def get_async(
-        self, endpoint: str
-    ) -> Any:
+    async def get_async(self, endpoint: str) -> Any:
         payload = self._get_http_payload(endpoint)
 
         async with httpx.AsyncClient() as client:
             response = await client.get(**payload)
 
-        return response.json()
+        if response.status_code != 200:
+            print(f"\n{response.status_code=}\n")
+
+        return self._validate_response_status(response=response)
 
     def post(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
@@ -98,7 +115,7 @@ class HTTPXClient(AbstractHTTPClient):
             payload["json"] = json_data
 
         response = httpx.post(**payload)
-        return response.json()
+        return self._validate_response_status(response=response)
 
     async def post_async(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
@@ -110,4 +127,4 @@ class HTTPXClient(AbstractHTTPClient):
         async with httpx.AsyncClient() as client:
             response = await client.post(**payload)
 
-        return response.json()
+        return self._validate_response_status(response=response)
