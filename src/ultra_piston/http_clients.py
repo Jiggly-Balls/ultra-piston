@@ -11,6 +11,7 @@ except ImportError:
 from .errors import (
     InternalServerError,
     MissingDataError,
+    NotFoundError,
     TooManyRequests,
     UnexpectedStatusError,
 )
@@ -81,14 +82,19 @@ class HTTPXClient(AbstractHTTPClient):
         if 300 > response.status_code > 199:
             return response.json()
 
+        elif response.status_code == 404:
+            raise NotFoundError(str(response.url))
+
         elif response.status_code == 429:
-            raise TooManyRequests()
+            raise TooManyRequests(str(response.url))
 
         elif response.status_code == 500:
-            raise InternalServerError()
+            raise InternalServerError(str(response.url))
 
         else:
-            raise UnexpectedStatusError(response.status_code)
+            raise UnexpectedStatusError(
+                response.status_code, str(response.url)
+            )
 
     def get(self, endpoint: str) -> Any:
         payload = self._get_http_payload(endpoint)
