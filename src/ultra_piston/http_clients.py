@@ -42,17 +42,31 @@ class AbstractHTTPClient(ABC):
             )
         return self.headers
 
-    @abstractmethod
-    def get(self, endpoint: str) -> Any: ...
+    def _get_http_payload(self, endpoint: str = "") -> Dict[str, Any]:
+        BASE_URL = self._get_base_url() + endpoint
+        HEADERS = self._get_headers()
+
+        return {"url": BASE_URL, "headers": HEADERS}
 
     @abstractmethod
-    async def get_async(self, endpoint: str) -> Any: ...
+    def get(
+        self, endpoint: str
+    ) -> Any: ...
 
     @abstractmethod
-    def post(self, endpoint: str) -> Any: ...
+    async def get_async(
+        self, endpoint: str
+    ) -> Any: ...
 
     @abstractmethod
-    async def post_async(self, endpoint: str) -> Any: ...
+    def post(
+        self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
+    ) -> Any: ...
+
+    @abstractmethod
+    async def post_async(
+        self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
+    ) -> Any: ...
 
 
 class HTTPXClient(AbstractHTTPClient):
@@ -60,15 +74,40 @@ class HTTPXClient(AbstractHTTPClient):
         super().__init__()
         self.driver: str = "httpx"
 
-    def get(self, endpoint: str) -> Dict[str, Any]:
-        URL: str = self._get_base_url() + endpoint
-        HEADERS: Dict[str, str] = self._get_headers()
+    def get(self, endpoint: str) -> Any:
+        payload = self._get_http_payload(endpoint)
 
-        response = httpx.get(URL, headers=HEADERS)
+        response = httpx.get(**payload)
         return response.json()
 
-    async def get_async(self, endpoint: str) -> str: ...
+    async def get_async(
+        self, endpoint: str
+    ) -> Any:
+        payload = self._get_http_payload(endpoint)
 
-    def post(self, endpoint: str) -> None: ...
+        async with httpx.AsyncClient() as client:
+            response = await client.get(**payload)
 
-    async def post_async(self, endpoint: str) -> None: ...
+        return response.json()
+
+    def post(
+        self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
+    ) -> Any:
+        payload = self._get_http_payload(endpoint)
+        if json_data:
+            payload["json"] = json_data
+
+        response = httpx.post(**payload)
+        return response.json()
+
+    async def post_async(
+        self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
+    ) -> Any:
+        payload = self._get_http_payload(endpoint)
+        if json_data:
+            payload["json"] = json_data
+
+        async with httpx.AsyncClient() as client:
+            response = await client.post(**payload)
+
+        return response.json()
