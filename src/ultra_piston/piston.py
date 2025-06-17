@@ -8,7 +8,7 @@ from .http_clients import HTTPXClient
 from .models import Package, Runtime
 
 if TYPE_CHECKING:
-    from typing import Any, List, Optional, Type, Union
+    from typing import Any, Dict, List, Optional, Type, Union
 
     from .http_clients import AbstractHTTPClient
 
@@ -87,9 +87,19 @@ class PistonClient:
         package_data = await self._http_client.get_async("packages")
         return [Package(**package) for package in package_data]
 
-    def post_packages(self) -> ...: ...
+    def post_packages(self, language: str, version: str) -> None:
+        json_data: Dict[str, str] = {
+            "language": language,
+            "version": version,
+        }
+        self._http_client.post("packages", json_data=json_data)
 
-    async def post_packages_async(self) -> ...: ...
+    async def post_packages_async(self, language: str, version: str) -> None:
+        json_data: Dict[str, str] = {
+            "language": language,
+            "version": version,
+        }
+        await self._http_client.post_async("packages", json_data=json_data)
 
     def post_execute(self) -> ...: ...
 
