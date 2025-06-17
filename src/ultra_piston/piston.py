@@ -1,12 +1,14 @@
 from __future__ import annotations
 
+import functools
 import importlib
 from typing import TYPE_CHECKING
 
 from .http_clients import HTTPXClient
+from .models import Package, Runtime
 
 if TYPE_CHECKING:
-    from typing import Any, Optional, Type, Union
+    from typing import Any, List, Optional, Type, Union
 
     from .http_clients import AbstractHTTPClient
 
@@ -67,15 +69,23 @@ class PistonClient:
         for key, value in http_client_kwargs.items():
             setattr(self._http_client, key, value)
 
-    def get_runtimes(self) -> dict[str, Any]:
-        return self._http_client.get("runtimes")
+    @functools.cache
+    def get_runtimes(self) -> List[Runtime]:
+        runtime_data = self._http_client.get("runtimes")
+        return [Runtime(**runtime) for runtime in runtime_data]
 
-    async def get_runtimes_async(self) -> ...:
-        return await self._http_client.get_async("runtimes")
+    @functools.cache
+    async def get_runtimes_async(self) -> List[Runtime]:
+        runtime_data = await self._http_client.get_async("runtimes")
+        return [Runtime(**runtime) for runtime in runtime_data]
 
-    def get_packages(self) -> ...: ...
+    def get_packages(self) -> List[Package]:
+        package_data = self._http_client.get("packages")
+        return [Package(**package) for package in package_data]
 
-    async def get_packages_async(self) -> ...: ...
+    async def get_packages_async(self) -> List[Package]:
+        package_data = await self._http_client.get_async("packages")
+        return [Package(**package) for package in package_data]
 
     def post_packages(self) -> ...: ...
 
