@@ -51,7 +51,7 @@ class TooManyRequests(ServerError):
         status_code = 429
         message = message or (
             "Raised due to sending too many requests in a short interval. "
-            f"status_code={status_code} | endpoint={endpoint}."
+            f"status_code={status_code} | endpoint={endpoint}"
         )
         super().__init__(
             message,
@@ -69,7 +69,7 @@ class InternalServerError(ServerError):
         status_code = 500
         message = message or (
             "Raised due to an issue with the server. "
-            f"status_code={status_code} | endpoint={endpoint}."
+            f"status_code={status_code} | endpoint={endpoint}"
         )
 
         super().__init__(
@@ -88,7 +88,7 @@ class NotFoundError(ServerError):
         status_code = 404
         message = message or (
             "Unexpected response code received. "
-            f"status_code={status_code} | endpoint={endpoint}."
+            f"status_code={status_code} | endpoint={endpoint}"
         )
 
         super().__init__(
@@ -109,7 +109,7 @@ class UnexpectedStatusError(ServerError):
     ) -> None:
         message = message or (
             "Unexpected response code received. "
-            f"status_code={status_code} | endpoint={endpoint}."
+            f"status_code={status_code} | endpoint={endpoint}"
         )
 
         super().__init__(
