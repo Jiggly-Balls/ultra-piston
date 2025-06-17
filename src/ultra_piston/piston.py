@@ -3,7 +3,6 @@ from __future__ import annotations
 import importlib
 from typing import TYPE_CHECKING
 
-from . import __title__, __version__
 from .http_clients import HTTPXClient
 
 if TYPE_CHECKING:
@@ -24,22 +23,34 @@ class PistonClient:
         **http_client_kwargs: Any,
     ) -> None:
         self._http_client: AbstractHTTPClient = http_client()
+        driver_version: Optional[str] = None
 
         if not self._http_client.driver:
             raise ValueError(
-                f"No http `driver` was specified of {http_client=}. "
-                f"Please make sure you have specified the value of the `driver` attribute in {http_client}. "
-                "Example: httpx, aiohttp, requests, etc (Enter the one YOU are using)."
+                f"No http `driver` was specified of `http_client={http_client}`. "
+                f"Please make sure you have specified the value of the `driver` attribute in `{http_client}`. "
+                "Example: httpx, aiohttp, requests, etc."
             )
 
         try:
-            importlib.import_module(self._http_client.driver)
+            driver_lib = importlib.import_module(self._http_client.driver)
+
         except ModuleNotFoundError as error:
             raise ModuleNotFoundError(
-                f"Couldn't find the specified HTTP driver: {self._http_client.driver} "
-                f"from the passed `{http_client=}`. Please make sure you have installed "
-                f"{self._http_client.driver} before running your project."
+                f"Couldn't find the specified HTTP driver: `{self._http_client.driver}` "
+                f"from the passed `http_client={http_client}`. Please make sure you have installed "
+                f"`{self._http_client.driver}` before running your project."
             ) from error
+
+        driver_version = getattr(driver_lib, "__version__")
+        if not driver_version:
+            version_info = getattr(driver_lib, "version_info")
+            if version_info:
+                try:
+                    driver_version = ".".join(version_info)
+                except:  # noqa: E722
+                    pass
+        driver_version = driver_version or "UNKOWN_VERSION"
 
         if not base_url.endswith("/"):
             base_url += "/"
@@ -47,7 +58,7 @@ class PistonClient:
         self._http_client.base_url = base_url
         self._http_client.rate_limit = rate_limit
         self._http_client.headers = {
-            "User-Agent": f"{self._http_client.driver}; {__title__} v{__version__}; {app_name}",
+            "User-Agent": f"{self._http_client.driver} {driver_version}; {app_name}",
             "Content-Type": "application/json",
         }
         if api_key:
@@ -59,7 +70,8 @@ class PistonClient:
     def get_runtimes(self) -> dict[str, Any]:
         return self._http_client.get("runtimes")
 
-    async def get_runtimes_async(self) -> ...: ...
+    async def get_runtimes_async(self) -> ...:
+        return await self._http_client.get_async("runtimes")
 
     def get_packages(self) -> ...: ...
 
