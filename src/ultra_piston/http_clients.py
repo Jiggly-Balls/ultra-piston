@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict
 
 try:
     import httpx
@@ -72,6 +72,16 @@ class AbstractHTTPClient(ABC):
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any: ...
 
+    @abstractmethod
+    def delete(
+        self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
+    ) -> Any: ...
+
+    @abstractmethod
+    async def delete_async(
+        self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
+    ) -> Any: ...
+
 
 class HTTPXClient(AbstractHTTPClient):
     def __init__(self) -> None:
@@ -129,5 +139,28 @@ class HTTPXClient(AbstractHTTPClient):
 
         async with httpx.AsyncClient() as client:
             response = await client.post(**payload)
+
+        return self._validate_response_status(response=response)
+
+    def delete(
+        self, endpoint: str, json_data: Dict[Any, Any] | None = None
+    ) -> Any:
+        payload = self._get_http_payload(endpoint)
+        payload["method"] = "DELETE"
+        if json_data:
+            payload["json"] = json_data
+
+        response = httpx.request(**payload)
+        return self._validate_response_status(response=response)
+
+    async def delete_async(
+        self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
+    ) -> Any:
+        payload = self._get_http_payload(endpoint)
+        if json_data:
+            payload["json"] = json_data
+
+        async with httpx.AsyncClient() as client:
+            response = await client.request(**payload)
 
         return self._validate_response_status(response=response)
