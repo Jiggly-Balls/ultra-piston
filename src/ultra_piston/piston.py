@@ -5,7 +5,7 @@ import importlib
 from typing import TYPE_CHECKING
 
 from .http_clients import HTTPXClient
-from .models import Package, Runtime
+from .models import ExecutionOutput, File, Package, Runtime
 
 if TYPE_CHECKING:
     from typing import Any, Dict, List, Optional, Type, Union
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from .http_clients import AbstractHTTPClient
 
 
-__all__  = ("PistonClient",)
+__all__ = ("PistonClient",)
 
 
 class PistonClient:
@@ -104,10 +104,76 @@ class PistonClient:
         }
         await self._http_client.post_async("packages", json_data=json_data)
 
-    def post_execute(self) -> ...: ...
+    def post_execute(
+        self,
+        language: str,
+        version: str,
+        files: List[File],
+        stdin: Optional[str] = None,
+        args: Optional[List[str]] = None,
+        compile_timeout: Union[float, int] = 10000,
+        run_timeout: Union[float, int] = 3000,
+        compile_memory_limit: int = -1,
+        run_memory_limit: int = -1,
+    ) -> ExecutionOutput:
+        json_data: Dict[str, Any] = {
+            "language": language,
+            "version": version,
+            "files": [file.model_dump() for file in files],
+            "compile_timeout": compile_timeout,
+            "run_timeout": run_timeout,
+            "compile_memory_limit": compile_memory_limit,
+            "run_memory_limit": run_memory_limit,
+        }
+        if stdin:
+            json_data["stdin"] = stdin
+        if args:
+            json_data["args"] = args
 
-    async def post_execute_async(self) -> ...: ...
+        response = self._http_client.post("execute", json_data=json_data)
+        return ExecutionOutput(**response)
 
-    def delete_packages(self) -> ...: ...
+    async def post_execute_async(
+        self,
+        language: str,
+        version: str,
+        files: List[File],
+        stdin: Optional[str] = None,
+        args: Optional[List[str]] = None,
+        compile_timeout: Union[float, int] = 10000,
+        run_timeout: Union[float, int] = 3000,
+        compile_memory_limit: int = -1,
+        run_memory_limit: int = -1,
+    ) -> ExecutionOutput:
+        json_data: Dict[str, Any] = {
+            "language": language,
+            "version": version,
+            "files": [file.model_dump() for file in files],
+            "compile_timeout": compile_timeout,
+            "run_timeout": run_timeout,
+            "compile_memory_limit": compile_memory_limit,
+            "run_memory_limit": run_memory_limit,
+        }
+        if stdin:
+            json_data["stdin"] = stdin
+        if args:
+            json_data["args"] = args
 
-    async def delete_packages_async(self) -> ...: ...
+        response = await self._http_client.post_async(
+            "execute", json_data=json_data
+        )
+        return ExecutionOutput(**response)
+
+    def delete_packages(self, language: str, version: str) -> None:
+        json_data: Dict[str, str] = {
+            "language": language,
+            "version": version,
+        }
+        self._http_client.delete("packages", json_data=json_data)
+
+    async def delete_packages_async(self, language: str, version: str) -> None:
+        json_data: Dict[str, str] = {
+            "language": language,
+            "version": version,
+        }
+        await self._http_client.delete_async("packages", json_data=json_data)
