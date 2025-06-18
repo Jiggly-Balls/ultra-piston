@@ -2,7 +2,14 @@ from typing import List, Literal, Optional, Union
 
 from pydantic import BaseModel
 
-__all__ = ("Runtime", "Package", "File")
+__all__ = (
+    "Runtime",
+    "Package",
+    "File",
+    "RunStage",
+    "CompileStage",
+    "ExecutionOutput",
+)
 
 
 class Runtime(BaseModel):
