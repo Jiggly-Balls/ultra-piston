@@ -59,3 +59,5 @@ reportUnknownVariableType = false
 reportDeprecated = false
 reportImplicitOverride = false
 reportUnusedParameter = false
+reportIncompatibleVariableOverride = false
+reportPossiblyUnboundVariable = false
