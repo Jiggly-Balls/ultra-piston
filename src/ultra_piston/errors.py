@@ -42,14 +42,6 @@ class MissingDataError(InternalError):
     """Raised when the required data is not set or is missing."""
 
 
-class ExecutionError(InternalError):
-    """Raised when the executed code has an error in it."""
-
-    def __init__(self, error_message: str) -> None:
-        self.error_message = error_message
-        super().__init__(error_message)
-
-
 class TooManyRequests(ServerError):
     """Raised due to sending too many requests in a short interval."""
 
