@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+import asyncio
+import functools
+import time
 from abc import ABC, abstractmethod
+from datetime import datetime, timedelta
 from typing import TYPE_CHECKING, Any, Dict
 
 try:
     import httpx
-except ImportError:
+except ModuleNotFoundError:
     pass
 
 from .errors import (
@@ -17,9 +21,22 @@ from .errors import (
 )
 
 if TYPE_CHECKING:
-    from typing import Any, Dict, Optional, Union
+    from asyncio import Queue
+    from typing import (
+        Any,
+        Awaitable,
+        Callable,
+        Dict,
+        Optional,
+        ParamSpec,
+        TypeVar,
+        Union,
+    )
 
     from httpx import Response
+
+    P = ParamSpec("P")
+    R = TypeVar("R")
 
 
 __all__ = ("AbstractHTTPClient", "HTTPXClient")
@@ -89,7 +106,10 @@ class AbstractHTTPClient(ABC):
 class HTTPXClient(AbstractHTTPClient):
     def __init__(self) -> None:
         super().__init__()
+
         self.driver: str = "httpx"
+        self._last_request: Optional[datetime] = None
+        self._request_queue: Queue[Awaitable[Any]] = asyncio.Queue(maxsize=1)
 
     def _validate_response_status(self, response: Response) -> Any:
         if 300 > response.status_code > 199:
@@ -109,13 +129,72 @@ class HTTPXClient(AbstractHTTPClient):
                 response.status_code, str(response.url)
             )
 
+    @staticmethod
+    def sync_ratelimit(func: Callable[P, R]) -> Callable[P, R]:
+        @functools.wraps(func)
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+            instance: HTTPXClient = args[0]  # type: ignore -- VSC editor bug in showing reportAssignmentType error.
+
+            if instance._last_request:
+                now = datetime.now()
+                future_request_time = instance._last_request + timedelta(
+                    seconds=instance._get_rate_limit()
+                )
+                if now < future_request_time:
+                    cool_down = (future_request_time - now).seconds
+                    time.sleep(cool_down)
+
+            result = func(*args, **kwargs)
+
+            instance._last_request = datetime.now()
+
+            return result
+
+        return wrapper
+
+    @staticmethod
+    def async_ratelimit(
+        func: Callable[P, Awaitable[R]],
+    ) -> Callable[P, Awaitable[R]]:
+        @functools.wraps(func)
+        async def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+            event_loop = asyncio.get_event_loop()
+            instance: HTTPXClient = args[0]  # type: ignore
+
+            if instance._last_request is not None:
+                now = datetime.now()
+                valid_future_stamp = instance._last_request + timedelta(
+                    seconds=instance._get_rate_limit()
+                )
+                if now < valid_future_stamp:
+                    # Rate limited
+                    cool_down = (valid_future_stamp - now).seconds
+                    await asyncio.sleep(cool_down)
+
+            instance._last_request = datetime.now()
+
+            future_await = func(*args, **kwargs)
+            task_fetch = event_loop.create_task(
+                instance._create_queue(future_await)
+            )
+            task_data = await asyncio.wait([task_fetch])
+            return task_data[0].pop().result()
+
+        return wrapper
+
+    async def _create_queue(self, coro: Awaitable[R]) -> R:
+        await self._request_queue.put(coro)
+        awaitable = await self._request_queue.get()
+        return await awaitable
+
+    @sync_ratelimit
     def get(self, endpoint: str) -> Any:
         payload = self._get_http_payload(endpoint)
-
         response = httpx.get(**payload)
         return self._validate_response_status(response=response)
 
-    async def get_async(self, endpoint: str) -> Any:
+    @async_ratelimit
+    async def get_async(self, endpoint: str) -> Any:  # pyright:ignore[reportIncompatibleMethodOverride]
         payload = self._get_http_payload(endpoint)
 
         async with httpx.AsyncClient() as client:
@@ -123,6 +202,7 @@ class HTTPXClient(AbstractHTTPClient):
 
         return self._validate_response_status(response=response)
 
+    @sync_ratelimit
     def post(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any:
@@ -133,7 +213,8 @@ class HTTPXClient(AbstractHTTPClient):
         response = httpx.post(**payload)
         return self._validate_response_status(response=response)
 
-    async def post_async(
+    @async_ratelimit
+    async def post_async(  # pyright:ignore[reportIncompatibleMethodOverride]
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any:
         payload = self._get_http_payload(endpoint)
@@ -145,6 +226,7 @@ class HTTPXClient(AbstractHTTPClient):
 
         return self._validate_response_status(response=response)
 
+    @sync_ratelimit
     def delete(
         self, endpoint: str, json_data: Dict[Any, Any] | None = None
     ) -> Any:
@@ -156,7 +238,8 @@ class HTTPXClient(AbstractHTTPClient):
         response = httpx.request(**payload)
         return self._validate_response_status(response=response)
 
-    async def delete_async(
+    @async_ratelimit
+    async def delete_async(  # pyright:ignore[reportIncompatibleMethodOverride]
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any:
         payload = self._get_http_payload(endpoint)
