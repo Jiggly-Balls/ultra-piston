@@ -27,7 +27,15 @@ class InternalError(BaseException):
 
 
 class ServerError(BasePistonError):
-    """Raised for server responses that return a non-2xx (error) HTTP status code."""
+    """Raised for server responses that return a non-2xx (error) HTTP status code.
+    
+    Attributes
+    ----------
+    endpoint
+        | The endpoint URL.
+    status_code
+        | The status code of the server response. 
+    """
 
     def __init__(
         self, *args: Any, endpoint: Optional[str] = None, status_code: int
@@ -43,7 +51,15 @@ class MissingDataError(InternalError):
 
 
 class TooManyRequests(ServerError):
-    """Raised due to sending too many requests in a short interval."""
+    """Raised due to sending too many requests in a short interval.
+    
+    Attributes
+    ----------
+    endpoint
+        | The endpoint URL.
+    status_code
+        | The status code of the server response. 
+    """
 
     def __init__(
         self, endpoint: Optional[str] = None, message: Optional[str] = None
@@ -61,7 +77,15 @@ class TooManyRequests(ServerError):
 
 
 class InternalServerError(ServerError):
-    """Raised due to an issue with the server."""
+    """Raised due to an issue with the server.
+    
+    Attributes
+    ----------
+    endpoint
+        | The endpoint URL.
+    status_code
+        | The status code of the server response. 
+    """
 
     def __init__(
         self, endpoint: Optional[str] = None, message: Optional[str] = None
@@ -80,7 +104,15 @@ class InternalServerError(ServerError):
 
 
 class NotFoundError(ServerError):
-    """Raised when trying to access an unkown endpoint."""
+    """Raised when trying to access an unkown endpoint.
+    
+    Attributes
+    ----------
+    endpoint
+        | The endpoint URL.
+    status_code
+        | The status code of the server response. 
+    """
 
     def __init__(
         self, endpoint: Optional[str] = None, message: Optional[str] = None
@@ -99,7 +131,15 @@ class NotFoundError(ServerError):
 
 
 class UnexpectedStatusError(ServerError):
-    """Raised for any unkown response status code (non-2xx)."""
+    """Raised for any unkown response status code (non-2xx).
+    
+    Attributes
+    ----------
+    endpoint
+        | The endpoint URL.
+    status_code
+        | The status code of the server response. 
+    """
 
     def __init__(
         self,
