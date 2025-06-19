@@ -17,6 +17,8 @@ __all__ = ("PistonClient",)
 
 
 class PistonClient:
+    """The main client to interact with the piston-api."""
+
     def __init__(
         self,
         *,
@@ -27,6 +29,26 @@ class PistonClient:
         http_client: Type[AbstractHTTPClient] = HTTPXClient,
         **http_client_kwargs: Any,
     ) -> None:
+        r"""
+        Parameters
+        ----------
+        api_key
+            | The API key to use if any.
+        rate_limit
+            | Ratelimit to set for the dispatched requests.
+            | Takes in a integer / float of the amount of delay between each request.
+            | Defaults to 1 request per second.
+        app_name
+            | Name of your app / project. To be used by the HTTP client's User-Agent.
+        base_url
+            | Base URL of the API.
+        http_client
+            | The http client through which the requests are made with.
+        http_client_kwargs
+            | The attributes to set to the http client.
+            | Useful when you want to make your own HTTP client.
+        """
+
         self._http_client: AbstractHTTPClient = http_client()
         driver_version: Optional[str] = None
 
@@ -74,23 +96,57 @@ class PistonClient:
 
     @functools.cache
     def get_runtimes(self) -> List[Runtime]:
+        r"""Return a list of available languages."""
+
         runtime_data = self._http_client.get("runtimes")
         return [Runtime(**runtime) for runtime in runtime_data]
 
     @functools.cache
     async def get_runtimes_async(self) -> List[Runtime]:
+        r"""|coro|
+        
+        Return a list of available languages.
+        """
+
         runtime_data = await self._http_client.get_async("runtimes")
         return [Runtime(**runtime) for runtime in runtime_data]
 
     def get_packages(self) -> List[Package]:
+        r"""Returns a list of all possible packages, and their installation status.
+
+        .. warning::
+            This method is not available for the public API.
+        """
+
         package_data = self._http_client.get("packages")
         return [Package(**package) for package in package_data]
 
     async def get_packages_async(self) -> List[Package]:
+        r"""|coro|
+        
+        Returns a list of all possible packages, and their installation status.
+
+        .. warning::
+            This method is not available for the public API.
+        """
+
         package_data = await self._http_client.get_async("packages")
         return [Package(**package) for package in package_data]
 
     def post_packages(self, language: str, version: str) -> None:
+        r"""Install the given package
+
+        .. warning::
+            This method is not available for the public API.
+
+        Parameters
+        ----------
+        language
+            | The name of the programming language.
+        version
+            | The version of the language.
+        """
+
         json_data: Dict[str, str] = {
             "language": language,
             "version": version,
@@ -98,6 +154,20 @@ class PistonClient:
         self._http_client.post("packages", json_data=json_data)
 
     async def post_packages_async(self, language: str, version: str) -> None:
+        r"""|coro|
+        
+        Install the given package
+
+        .. warning::
+            This method is not available for the public API.
+
+        Parameters
+        ----------
+        language
+            | The name of the programming language.
+        version
+            | The version of the language.
+        """
         json_data: Dict[str, str] = {
             "language": language,
             "version": version,
@@ -116,6 +186,36 @@ class PistonClient:
         compile_memory_limit: int = -1,
         run_memory_limit: int = -1,
     ) -> ExecutionOutput:
+        r"""Runs the given code, using the given runtime and arguments, returning the result.
+        
+        Parameters
+        ----------
+        language
+            | The name of the programming language.
+        version
+            | The version of the language.
+        files
+            | List of `File`(s) containing the code.
+        stdin
+            | Text to pass into stdin of the program.
+        args
+            | Arguments to pass to the program.
+        compile_timeout
+            | The maximum allowed time in milliseconds for the run stage to finish before bailing out.
+            | Must be a number, less than or equal to the configured maximum timeout. Defaults to maximum.
+        run_timeout
+            | The maximum allowed time in milliseconds for the compile stage to finish before bailing out.
+            | Must be a number, less than or equal to the configured maximum timeout.
+        compile_memory_limit
+            | The maximum amount of memory the compile stage is allowed to use in bytes.
+            | Must be a number, less than or equal to the configured maximum.
+            | Defaults to maximum, or -1 (no limit) if none is configured.
+        run_memory_limit
+            | The maximum amount of memory the run stage is allowed to use in bytes.
+            | Must be a number, less than or equal to the configured maximum.
+            | Defaults to maximum, or -1 (no limit) if none is configured.
+        """
+
         json_data: Dict[str, Any] = {
             "language": language,
             "version": version,
@@ -145,6 +245,38 @@ class PistonClient:
         compile_memory_limit: int = -1,
         run_memory_limit: int = -1,
     ) -> ExecutionOutput:
+        r"""|coro|
+        
+        Runs the given code, using the given runtime and arguments, returning the result.
+        
+        Parameters
+        ----------
+        language
+            | The name of the programming language.
+        version
+            | The version of the language.
+        files
+            | List of `File`(s) containing the code.
+        stdin
+            | Text to pass into stdin of the program.
+        args
+            | Arguments to pass to the program.
+        compile_timeout
+            | The maximum allowed time in milliseconds for the run stage to finish before bailing out.
+            | Must be a number, less than or equal to the configured maximum timeout. Defaults to maximum.
+        run_timeout
+            | The maximum allowed time in milliseconds for the compile stage to finish before bailing out.
+            | Must be a number, less than or equal to the configured maximum timeout.
+        compile_memory_limit
+            | The maximum amount of memory the compile stage is allowed to use in bytes.
+            | Must be a number, less than or equal to the configured maximum.
+            | Defaults to maximum, or -1 (no limit) if none is configured.
+        run_memory_limit
+            | The maximum amount of memory the run stage is allowed to use in bytes.
+            | Must be a number, less than or equal to the configured maximum.
+            | Defaults to maximum, or -1 (no limit) if none is configured.
+        """
+
         json_data: Dict[str, Any] = {
             "language": language,
             "version": version,
@@ -165,6 +297,12 @@ class PistonClient:
         return ExecutionOutput(**response)
 
     def delete_packages(self, language: str, version: str) -> None:
+        r"""Uninstall the given package.
+        
+        .. warning::
+            This method is not available for the public API.
+        """
+
         json_data: Dict[str, str] = {
             "language": language,
             "version": version,
@@ -172,6 +310,14 @@ class PistonClient:
         self._http_client.delete("packages", json_data=json_data)
 
     async def delete_packages_async(self, language: str, version: str) -> None:
+        r"""|coro|
+        
+        Uninstall the given package.
+        
+        .. warning::
+            This method is not available for the public API.
+        """
+
         json_data: Dict[str, str] = {
             "language": language,
             "version": version,
