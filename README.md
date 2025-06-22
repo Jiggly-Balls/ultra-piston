@@ -1,5 +1,5 @@
 # Ultra Piston
-An all-in-one API wrapper for the [Piston API](https://piston.readthedocs.io/en/latest/) in Python.
+An all-in-one wrapper for the [Piston API](https://piston.readthedocs.io/en/latest/) in Python.
 
 # Features
 This library offers robust customization options and essential functionalities, including:
