@@ -12,8 +12,13 @@ dependencies = [
 [dependency-groups]
 dev = [
     "basedpyright>=1.29.4",
+    "furo>=2024.8.6",
     "isort>=6.0.1",
+    "numpydoc>=1.8.0",
     "ruff>=0.11.13",
+    "sphinx>=8.2.3",
+    "sphinx-autobuild>=2024.10.3",
+    "sphinx-autodoc-typehints>=3.2.0",
 ]
 
 [tool.isort]

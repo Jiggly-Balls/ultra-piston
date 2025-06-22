@@ -17,7 +17,26 @@ __all__ = ("PistonClient",)
 
 
 class PistonClient:
-    """The main client to interact with the piston-api."""
+    r"""The main client to interact with the piston-api.
+
+    Parameters
+    ----------
+    api_key
+        | The API key to use if any.
+    rate_limit
+        | Ratelimit to set for the dispatched requests.
+        | Takes in a integer / float of the amount of delay between each request.
+        | Defaults to 1 request per second.
+    app_name
+        | Name of your app / project. To be used by the HTTP client's User-Agent.
+    base_url
+        | Base URL of the API.
+    http_client
+        | The http client through which the requests are made with.
+    http_client_kwargs
+        | The attributes to set to the http client.
+        | Useful when you want to make your own HTTP client.
+    """
 
     def __init__(
         self,
@@ -29,25 +48,7 @@ class PistonClient:
         http_client: Type[AbstractHTTPClient] = HTTPXClient,
         **http_client_kwargs: Any,
     ) -> None:
-        r"""
-        Parameters
-        ----------
-        api_key
-            | The API key to use if any.
-        rate_limit
-            | Ratelimit to set for the dispatched requests.
-            | Takes in a integer / float of the amount of delay between each request.
-            | Defaults to 1 request per second.
-        app_name
-            | Name of your app / project. To be used by the HTTP client's User-Agent.
-        base_url
-            | Base URL of the API.
-        http_client
-            | The http client through which the requests are made with.
-        http_client_kwargs
-            | The attributes to set to the http client.
-            | Useful when you want to make your own HTTP client.
-        """
+        r""" """
 
         self._http_client: AbstractHTTPClient = http_client()
         driver_version: Optional[str] = None
@@ -104,7 +105,7 @@ class PistonClient:
     @functools.cache
     async def get_runtimes_async(self) -> List[Runtime]:
         r"""|coro|
-        
+
         Return a list of available languages.
         """
 
@@ -123,7 +124,7 @@ class PistonClient:
 
     async def get_packages_async(self) -> List[Package]:
         r"""|coro|
-        
+
         Returns a list of all possible packages, and their installation status.
 
         .. warning::
@@ -155,7 +156,7 @@ class PistonClient:
 
     async def post_packages_async(self, language: str, version: str) -> None:
         r"""|coro|
-        
+
         Install the given package
 
         .. warning::
@@ -187,7 +188,7 @@ class PistonClient:
         run_memory_limit: int = -1,
     ) -> ExecutionOutput:
         r"""Runs the given code, using the given runtime and arguments, returning the result.
-        
+
         Parameters
         ----------
         language
@@ -246,9 +247,9 @@ class PistonClient:
         run_memory_limit: int = -1,
     ) -> ExecutionOutput:
         r"""|coro|
-        
+
         Runs the given code, using the given runtime and arguments, returning the result.
-        
+
         Parameters
         ----------
         language
@@ -298,7 +299,7 @@ class PistonClient:
 
     def delete_packages(self, language: str, version: str) -> None:
         r"""Uninstall the given package.
-        
+
         .. warning::
             This method is not available for the public API.
         """
@@ -311,9 +312,9 @@ class PistonClient:
 
     async def delete_packages_async(self, language: str, version: str) -> None:
         r"""|coro|
-        
+
         Uninstall the given package.
-        
+
         .. warning::
             This method is not available for the public API.
         """
