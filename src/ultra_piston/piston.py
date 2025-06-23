@@ -48,8 +48,6 @@ class PistonClient:
         http_client: Type[AbstractHTTPClient] = HTTPXClient,
         **http_client_kwargs: Any,
     ) -> None:
-        r""" """
-
         self._http_client: AbstractHTTPClient = http_client()
         driver_version: Optional[str] = None
 
@@ -104,10 +102,7 @@ class PistonClient:
 
     @functools.cache
     async def get_runtimes_async(self) -> List[Runtime]:
-        r"""|coro|
-
-        Return a list of available languages.
-        """
+        r"""Return a list of available languages asynchronously."""
 
         runtime_data = await self._http_client.get_async("runtimes")
         return [Runtime(**runtime) for runtime in runtime_data]
@@ -123,9 +118,7 @@ class PistonClient:
         return [Package(**package) for package in package_data]
 
     async def get_packages_async(self) -> List[Package]:
-        r"""|coro|
-
-        Returns a list of all possible packages, and their installation status.
+        r"""Returns a list of all possible packages, and their installation status asynchronously.
 
         .. warning::
             This method is not available for the public API.
@@ -135,7 +128,7 @@ class PistonClient:
         return [Package(**package) for package in package_data]
 
     def post_packages(self, language: str, version: str) -> None:
-        r"""Install the given package
+        r"""Install the given package.
 
         .. warning::
             This method is not available for the public API.
@@ -155,9 +148,7 @@ class PistonClient:
         self._http_client.post("packages", json_data=json_data)
 
     async def post_packages_async(self, language: str, version: str) -> None:
-        r"""|coro|
-
-        Install the given package
+        r"""Install the given package asynchronously.
 
         .. warning::
             This method is not available for the public API.
@@ -215,6 +206,10 @@ class PistonClient:
             | The maximum amount of memory the run stage is allowed to use in bytes.
             | Must be a number, less than or equal to the configured maximum.
             | Defaults to maximum, or -1 (no limit) if none is configured.
+
+        Returns
+        -------
+        Returns the ``ExecutionOutput`` data containing various data related to the ran code.
         """
 
         json_data: Dict[str, Any] = {
@@ -246,9 +241,7 @@ class PistonClient:
         compile_memory_limit: int = -1,
         run_memory_limit: int = -1,
     ) -> ExecutionOutput:
-        r"""|coro|
-
-        Runs the given code, using the given runtime and arguments, returning the result.
+        r"""Runs the given code, using the given runtime and arguments, returning the result asynchronously.
 
         Parameters
         ----------
@@ -276,6 +269,10 @@ class PistonClient:
             | The maximum amount of memory the run stage is allowed to use in bytes.
             | Must be a number, less than or equal to the configured maximum.
             | Defaults to maximum, or -1 (no limit) if none is configured.
+
+        Returns
+        -------
+        Returns the ``ExecutionOutput`` data containing various data related to the ran code.
         """
 
         json_data: Dict[str, Any] = {
@@ -311,9 +308,7 @@ class PistonClient:
         self._http_client.delete("packages", json_data=json_data)
 
     async def delete_packages_async(self, language: str, version: str) -> None:
-        r"""|coro|
-
-        Uninstall the given package.
+        r"""Uninstall the given package asynchronously.
 
         .. warning::
             This method is not available for the public API.
