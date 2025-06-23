@@ -48,7 +48,7 @@ toc_object_entries_show_parents = "hide"
 autosectionlabel_prefix_document = True
 autosummary_generate = False
 autosummary_generate_overwrite = False
-autodoc_typehints = "description"
+autodoc_typehints = "none"  # "description"
 autodoc_typehints_description_target = "documented_params"
 autoclass_content = "both"
 
