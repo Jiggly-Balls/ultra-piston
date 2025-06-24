@@ -8,4 +8,5 @@ The following section outlines the API of Game State.
 
   api/version_info
   api/piston
+  api/models
   api/exceptions

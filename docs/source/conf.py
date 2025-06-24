@@ -17,6 +17,7 @@ release = "1.0.0 - final"
 
 # -- General configuration
 extensions = [
+    "sphinxcontrib.autodoc_pydantic",
     "sphinx.ext.duration",
     "sphinx.ext.doctest",
     "numpydoc",
