@@ -4,6 +4,8 @@ import functools
 import importlib
 from typing import TYPE_CHECKING
 
+from aiocache import cached
+
 from .http_clients import HTTPXClient
 from .models import ExecutionOutput, File, Package, Runtime
 
@@ -100,7 +102,7 @@ class PistonClient:
         runtime_data = self._http_client.get("runtimes")
         return [Runtime(**runtime) for runtime in runtime_data]
 
-    @functools.cache
+    @cached()
     async def get_runtimes_async(self) -> List[Runtime]:
         r"""Return a list of available languages asynchronously."""
 
@@ -187,7 +189,7 @@ class PistonClient:
         version
             | The version of the language.
         files
-            | List of `File`(s) containing the code.
+            | List of ``File``(s) containing the code.
         stdin
             | Text to pass into stdin of the program.
         args
@@ -250,7 +252,7 @@ class PistonClient:
         version
             | The version of the language.
         files
-            | List of `File`(s) containing the code.
+            | List of ``File``(s) containing the code.
         stdin
             | Text to pass into stdin of the program.
         args
