@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "aiocache>=0.12.3",
     "autodoc-pydantic>=2.2.0",
     "httpx>=0.28.1",
     "pydantic>=2.11.7",
