@@ -15,26 +15,26 @@ Exceptions
           * NotFoundError
           * UnexpectedStatusError
 
-.. autoclass:: BasePistonError
+.. autoclass:: ultra_piston.errors.BasePistonError
     :members:
 
-.. autoclass:: InternalError
+.. autoclass:: ultra_piston.errors.InternalError
     :members:
 
-.. autoclass:: ServerError
+.. autoclass:: ultra_piston.errors.ServerError
     :members:
 
-.. autoclass:: MissingDataError
+.. autoclass:: ultra_piston.errors.MissingDataError
     :members:
 
-.. autoclass:: TooManyRequests
+.. autoclass:: ultra_piston.errors.TooManyRequests
     :members:
 
-.. autoclass:: InternalServerError
+.. autoclass:: ultra_piston.errors.InternalServerError
     :members:
 
-.. autoclass:: NotFoundError
+.. autoclass:: ultra_piston.errors.NotFoundError
     :members:
 
-.. autoclass:: UnexpectedStatusError
+.. autoclass:: ultra_piston.errors.UnexpectedStatusError
     :members:
