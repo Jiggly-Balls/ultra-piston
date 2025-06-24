@@ -18,6 +18,7 @@ class Runtime(BaseModel):
 
     Attributes
     ----------
+
     language
         The programming language.
     version
@@ -40,6 +41,7 @@ class Package(BaseModel):
 
     Attributes
     ----------
+
     language
         The programming language the package is for.
     language_version
@@ -59,6 +61,7 @@ class File(BaseModel):
 
     Attributes
     ----------
+
     name
         The name of the file (e.g., "main.py").
     content
@@ -78,6 +81,7 @@ class RunStage(BaseModel):
 
     Attributes
     ----------
+
     code
         Exit code of the execution process.
     output
@@ -103,6 +107,7 @@ class CompileStage(BaseModel):
 
     Attributes
     ----------
+
     code
         Exit code of the compiler.
     output
@@ -128,6 +133,7 @@ class ExecutionOutput(BaseModel):
 
     Attributes
     ----------
+
     language
         The language used to execute the code.
     version
