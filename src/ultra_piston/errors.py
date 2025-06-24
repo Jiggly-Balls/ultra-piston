@@ -19,21 +19,21 @@ __all__ = (
 
 
 class BasePistonError(Exception):
-    """The base exception to all ultra-piston errors."""
+    r"""The base exception to all ultra-piston errors."""
 
 
 class InternalError(BaseException):
-    """Errors raised internally by the wrapper."""
+    r"""Errors raised internally by the wrapper."""
 
 
 class ServerError(BasePistonError):
-    """Raised for server responses that return a non-2xx (error) HTTP status code.
+    r"""Raised for server responses that return a non-2xx (error) HTTP status code.
 
     Attributes
     ----------
-    endpoint
+    endpoint : Optional[str]
         | The endpoint URL.
-    status_code
+    status_code : int
         | The status code of the server response.
     """
 
@@ -47,97 +47,97 @@ class ServerError(BasePistonError):
 
 
 class MissingDataError(InternalError):
-    """Raised when the required data is not set or is missing."""
+    r"""Raised when the required data is not set or is missing."""
 
 
 class TooManyRequests(ServerError):
-    """Raised due to sending too many requests in a short interval.
+    r"""Raised due to sending too many requests in a short interval.
 
     Attributes
     ----------
-    endpoint
+    endpoint : Optional[str]
         | The endpoint URL.
-    status_code
+    status_code : int
         | The status code of the server response.
     """
 
     def __init__(
         self, endpoint: Optional[str] = None, message: Optional[str] = None
     ) -> None:
-        status_code = 429
+        STATUS_CODE = 429
         message = message or (
             "Raised due to sending too many requests in a short interval. "
-            f"status_code={status_code} | endpoint={endpoint}"
+            f"status_code={STATUS_CODE} | endpoint={endpoint}"
         )
         super().__init__(
             message,
             endpoint=endpoint,
-            status_code=status_code,
+            status_code=STATUS_CODE,
         )
 
 
 class InternalServerError(ServerError):
-    """Raised due to an issue with the server.
+    r"""Raised due to an issue with the server.
 
     Attributes
     ----------
-    endpoint
+    endpoint : Optional[str]
         | The endpoint URL.
-    status_code
+    status_code : int
         | The status code of the server response.
     """
 
     def __init__(
         self, endpoint: Optional[str] = None, message: Optional[str] = None
     ) -> None:
-        status_code = 500
+        STATUS_CODE = 500
         message = message or (
             "Raised due to an issue with the server. "
-            f"status_code={status_code} | endpoint={endpoint}"
+            f"status_code={STATUS_CODE} | endpoint={endpoint}"
         )
 
         super().__init__(
             message,
             endpoint=endpoint,
-            status_code=status_code,
+            status_code=STATUS_CODE,
         )
 
 
 class NotFoundError(ServerError):
-    """Raised when trying to access an unkown endpoint.
+    r"""Raised when trying to access an unkown endpoint.
 
     Attributes
     ----------
-    endpoint
+    endpoint : Optional[str]
         | The endpoint URL.
-    status_code
+    status_code : int
         | The status code of the server response.
     """
 
     def __init__(
         self, endpoint: Optional[str] = None, message: Optional[str] = None
     ) -> None:
-        status_code = 404
+        STATUS_CODE = 404
         message = message or (
             "Tried accessing an unkown endpoint. "
-            f"status_code={status_code} | endpoint={endpoint}"
+            f"status_code={STATUS_CODE} | endpoint={endpoint}"
         )
 
         super().__init__(
             message,
             endpoint=endpoint,
-            status_code=status_code,
+            status_code=STATUS_CODE,
         )
 
 
 class UnexpectedStatusError(ServerError):
-    """Raised for any unkown response status code (non-2xx).
+    r"""Raised for any unkown response status code (non-2xx).
 
     Attributes
     ----------
-    endpoint
+    endpoint : Optional[str]
         | The endpoint URL.
-    status_code
+    status_code : int
         | The status code of the server response.
     """
 
