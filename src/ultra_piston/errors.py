@@ -11,7 +11,7 @@ __all__ = (
     "InternalError",
     "ServerError",
     "MissingDataError",
-    "TooManyRequests",
+    "TooManyRequestsError",
     "InternalServerError",
     "NotFoundError",
     "UnexpectedStatusError",
@@ -50,7 +50,7 @@ class MissingDataError(InternalError):
     r"""Raised when the required data is not set or is missing."""
 
 
-class TooManyRequests(ServerError):
+class TooManyRequestsError(ServerError):
     r"""Raised due to sending too many requests in a short interval.
 
     Attributes
