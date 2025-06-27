@@ -19,7 +19,8 @@ __all__ = ("PistonClient",)
 
 
 class PistonClient:
-    r"""The main client to interact with the piston-api.
+    r"""
+    The main client to interact with the piston-api.
 
     Parameters
     ----------
@@ -189,7 +190,7 @@ class PistonClient:
         version
             | The version of the language.
         files
-            | List of ``File``(s) containing the code.
+            | List of File(s) containing the code.
         stdin
             | Text to pass into stdin of the program.
         args
@@ -211,7 +212,7 @@ class PistonClient:
 
         Returns
         -------
-        Returns the ``ExecutionOutput`` data containing various data related to the ran code.
+        | Returns the ExecutionOutput data containing various data related to the ran code.
         """
 
         json_data: Dict[str, Any] = {
@@ -252,7 +253,7 @@ class PistonClient:
         version
             | The version of the language.
         files
-            | List of ``File``(s) containing the code.
+            | List of File(s) containing the code.
         stdin
             | Text to pass into stdin of the program.
         args
@@ -274,7 +275,7 @@ class PistonClient:
 
         Returns
         -------
-        Returns the ``ExecutionOutput`` data containing various data related to the ran code.
+        Returns the ExecutionOutput data containing various data related to the ran code.
         """
 
         json_data: Dict[str, Any] = {

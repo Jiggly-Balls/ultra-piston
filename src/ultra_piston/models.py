@@ -20,13 +20,13 @@ class Runtime(BaseModel):
     ----------
 
     language
-        The programming language.
+        | The programming language.
     version
-        The specific version of the language (e.g., "3.10.0").
+        | The specific version of the language (e.g., "3.10.0").
     aliases
-        Alternate names or shortcuts for the language.
+        | Alternate names or shortcuts for the language.
     runtime
-        The runtime environment identifier, if applicable.
+        | The runtime environment identifier, if applicable.
     """
 
     language: str
@@ -43,11 +43,11 @@ class Package(BaseModel):
     ----------
 
     language
-        The programming language the package is for.
+        | The programming language the package is for.
     language_version
-        The version of the language the package is associated with.
+        | The version of the language the package is associated with.
     installed
-        Whether the package is installed and available.
+        | Whether the package is installed and available.
     """
 
     language: str
@@ -63,14 +63,14 @@ class File(BaseModel):
     ----------
 
     name
-        The name of the file (e.g., "main.py").
+        | The name of the file (e.g., "main.py").
     content
-        The raw contents of the file.
+        | The raw contents of the file.
     encoding
-        The encoding format used for the content. Defaults to "utf8".
+        | The encoding format used for the content. Defaults to "utf8".
     """
 
-    name: Optional[str]
+    name: Optional[str] = None
     content: str
     encoding: Literal["base64", "hex", "utf8"] = "utf8"
 
@@ -83,22 +83,22 @@ class RunStage(BaseModel):
     ----------
 
     code
-        Exit code of the execution process.
+        | Exit code of the execution process.
     output
-        Combined standard output and or error.
+        | Combined standard output and or error.
     stderr
-        Standard error stream.
+        | Standard error stream.
     stdout
-        Standard output stream.
+        | Standard output stream.
     signal
-        Signal that caused the process to terminate, if any.
+        | Signal that caused the process to terminate, if any.
     """
 
-    code: Optional[int]
+    code: Optional[int] = None
     output: str
     stderr: str
     stdout: str
-    signal: Optional[str]
+    signal: Optional[str] = None
 
 
 class CompileStage(BaseModel):
@@ -109,22 +109,22 @@ class CompileStage(BaseModel):
     ----------
 
     code
-        Exit code of the compiler.
+        | Exit code of the compiler.
     output
-        Combined standard output and error from the compiler.
+        | Combined standard output and error from the compiler.
     stderr
-        Standard error stream from the compiler.
+        | Standard error stream from the compiler.
     stdout
-        Standard output stream from the compiler.
+        | Standard output stream from the compiler.
     signal
-        Signal that caused the compiler process to terminate, if any.
+        | Signal that caused the compiler process to terminate, if any.
     """
 
-    code: Optional[int]
+    code: Optional[int] = None
     output: str
     stderr: str
     stdout: str
-    signal: Optional[str]
+    signal: Optional[str] = None
 
 
 class ExecutionOutput(BaseModel):
@@ -135,17 +135,17 @@ class ExecutionOutput(BaseModel):
     ----------
 
     language
-        The language used to execute the code.
+        | The language used to execute the code.
     version
-        The language version used.
+        | The language version used.
     run
-        Output from the runtime execution stage.
+        | Output from the runtime execution stage.
     compile
-        Output from the compilation stage, if compilation was required.
+        | Output from the compilation stage, if compilation was required.
     compile_memory_limit
-        Memory limit (in bytes) used during compilation.
+        | Memory limit (in bytes) used during compilation.
     compile_timeout
-        Timeout (in milliseconds) for the compilation stage.
+        | Timeout (in milliseconds) for the compilation stage.
     """
 
     language: str
