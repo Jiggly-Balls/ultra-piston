@@ -16,7 +16,7 @@ from .errors import (
     InternalServerError,
     MissingDataError,
     NotFoundError,
-    TooManyRequests,
+    TooManyRequestsError,
     UnexpectedStatusError,
 )
 
@@ -43,6 +43,23 @@ __all__ = ("AbstractHTTPClient", "HTTPXClient")
 
 
 class AbstractHTTPClient(ABC):
+    r"""
+    An abstract base class for HTTP clients used to communicate with external services.
+
+    Attributes
+    ----------
+    driver : Optional[str]
+        | The name of the HTTP driver or implementation used.
+    rate_limit : Optional[Union[int, float]]
+        | Ratelimit to set for the dispatched requests.
+        | Takes in a integer / float of the amount of delay between each request.
+        | Defaults to 1 request per second.
+    base_url : Optional[str]
+        | The base URL for the API endpoint.
+    headers : Optional[Dict[str, str]]
+        | Default headers to include with every request.
+    """
+
     def __init__(self) -> None:
         self.driver: Optional[str] = None
         self.rate_limit: Optional[Union[int, float]] = None
@@ -50,6 +67,20 @@ class AbstractHTTPClient(ABC):
         self.headers: Optional[Dict[str, str]] = None
 
     def _get_rate_limit(self) -> Union[int, float]:
+        """
+        Retrieve the configured request rate limit.
+
+        Returns
+        -------
+        Union[int, float]
+            The rate limit value.
+
+        Raises
+        ------
+        MissingDataError
+            If no rate limit is set.
+        """
+
         if not self.rate_limit:
             raise MissingDataError(
                 f"Missing valid value for the attribute `self.rate_limit` of {self.__class__}."
@@ -57,6 +88,20 @@ class AbstractHTTPClient(ABC):
         return self.rate_limit
 
     def _get_base_url(self) -> str:
+        """
+        Retrieve the configured base URL for the API.
+
+        Returns
+        -------
+        str
+            The base URL.
+
+        Raises
+        ------
+        MissingDataError
+            If no base URL is set.
+        """
+
         if not self.base_url:
             raise MissingDataError(
                 f"Missing valid value for the attribute `self.base_url` of {self.__class__}."
@@ -64,6 +109,20 @@ class AbstractHTTPClient(ABC):
         return self.base_url
 
     def _get_headers(self) -> Dict[str, str]:
+        """
+        Retrieve the default HTTP headers for requests.
+
+        Returns
+        -------
+        Dict[str, str]
+            The request headers.
+
+        Raises
+        ------
+        MissingDataError
+            If no headers are set.
+        """
+
         if not self.headers:
             raise MissingDataError(
                 f"Missing valid value for the attribute `self.headers` of {self.__class__}."
@@ -71,36 +130,136 @@ class AbstractHTTPClient(ABC):
         return self.headers
 
     def _get_http_payload(self, endpoint: str = "") -> Dict[str, Any]:
+        """
+        Construct the full HTTP payload with URL and headers.
+
+        Parameters
+        ----------
+        endpoint : str, optional
+            The endpoint path to append to the base URL.
+
+        Returns
+        -------
+        Dict[str, Any]
+            Dictionary containing the full URL and headers.
+        """
+
         BASE_URL = self._get_base_url() + endpoint
         HEADERS = self._get_headers()
 
         return {"url": BASE_URL, "headers": HEADERS}
 
     @abstractmethod
-    def get(self, endpoint: str) -> Any: ...
+    def get(self, endpoint: str) -> Any:
+        """
+        Send a synchronous GET request to the given endpoint.
+
+        Parameters
+        ----------
+        endpoint : str
+            The API endpoint to request.
+
+        Returns
+        -------
+        Any
+            The server response.
+        """
 
     @abstractmethod
-    async def get_async(self, endpoint: str) -> Any: ...
+    async def get_async(self, endpoint: str) -> Any:
+        """
+        Send an asynchronous GET request to the given endpoint.
+
+        Parameters
+        ----------
+        endpoint : str
+            The API endpoint to request.
+
+        Returns
+        -------
+        Any
+            The server response.
+        """
 
     @abstractmethod
     def post(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
-    ) -> Any: ...
+    ) -> Any:
+        """
+        Send a synchronous POST request with optional JSON data.
+
+        Parameters
+        ----------
+        endpoint : str
+            The API endpoint to request.
+        json_data : dict, optional
+            The JSON payload to send.
+
+        Returns
+        -------
+        Any
+            The server response.
+        """
 
     @abstractmethod
     async def post_async(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
-    ) -> Any: ...
+    ) -> Any:
+        """
+        Send an asynchronous POST request with optional JSON data.
+
+        Parameters
+        ----------
+        endpoint : str
+            The API endpoint to request.
+        json_data : dict, optional
+            The JSON payload to send.
+
+        Returns
+        -------
+        Any
+            The server response.
+        """
 
     @abstractmethod
     def delete(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
-    ) -> Any: ...
+    ) -> Any:
+        """
+        Send a synchronous DELETE request with optional JSON data.
+
+        Parameters
+        ----------
+        endpoint : str
+            The API endpoint to request.
+        json_data : dict, optional
+            The JSON payload to send.
+
+        Returns
+        -------
+        Any
+            The server response.
+        """
 
     @abstractmethod
     async def delete_async(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
-    ) -> Any: ...
+    ) -> Any:
+        """
+        Send an asynchronous DELETE request with optional JSON data.
+
+        Parameters
+        ----------
+        endpoint : str
+            The API endpoint to request.
+        json_data : dict, optional
+            The JSON payload to send.
+
+        Returns
+        -------
+        Any
+            The server response.
+        """
 
 
 class HTTPXClient(AbstractHTTPClient):
@@ -119,7 +278,7 @@ class HTTPXClient(AbstractHTTPClient):
             raise NotFoundError(str(response.url))
 
         elif response.status_code == 429:
-            raise TooManyRequests(str(response.url))
+            raise TooManyRequestsError(str(response.url))
 
         elif response.status_code == 500:
             raise InternalServerError(str(response.url))
