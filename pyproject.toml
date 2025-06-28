@@ -27,6 +27,7 @@ classifiers = [
     "Topic :: Utilities",
     "Typing :: Typed"
 ]
+dependencies = []
 
 [project.urls]
 Source = "https://github.com/Jiggly-Balls/ultra-piston"
@@ -49,7 +50,7 @@ dev = [
     "pytest>=8.4.1",
     "pytest-asyncio>=1.0.0",
     "ruff>=0.11.13",
-    "sphinx>=8.2.3",
+    "sphinx==8.2.3",
     "sphinx-autobuild>=2024.10.3",
     "sphinx-autodoc-typehints>=3.2.0",
 ]
