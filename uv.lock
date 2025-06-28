@@ -743,7 +743,7 @@ wheels = [
 
 [[package]]
 name = "ultra-piston"
-version = "0.1.0"
+version = "1.0.0"
 source = { virtual = "." }
 dependencies = [
     { name = "aiocache" },
