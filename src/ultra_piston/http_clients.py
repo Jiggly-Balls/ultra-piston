@@ -392,6 +392,7 @@ class HTTPXClient(AbstractHTTPClient):
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any:
         payload = self._get_http_payload(endpoint)
+        payload["method"] = "DELETE"
         if json_data:
             payload["json"] = json_data
 
