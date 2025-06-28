@@ -2,7 +2,7 @@ Welcome to the Ultra Piston Documentation!
 ==========================================
 
 This documentation will serve as an API reference as well as a guide to getting
-started with the Game-State library.
+started with the library.
 
 About the Project
 -----------------
