@@ -3,26 +3,26 @@
 Models
 ======
 
-.. autoclass:: ultra_piston.Runtime
+.. autoclass:: ultra_piston.models.Runtime
     :members:
     :no-index:
 
-.. autoclass:: ultra_piston.ExecutionOutput
+.. autoclass:: ultra_piston.models.ExecutionOutput
     :members:
     :no-index:
 
-.. autoclass:: ultra_piston.File
+.. autoclass:: ultra_piston.models.File
     :members:
     :no-index:
 
-.. autoclass:: ultra_piston.Package
+.. autoclass:: ultra_piston.models.Package
     :members:
     :no-index:
 
-.. autoclass:: ultra_piston.RunStage
+.. autoclass:: ultra_piston.models.RunStage
     :members:
     :no-index:
 
-.. autoclass:: ultra_piston.Runtime
+.. autoclass:: ultra_piston.models.Runtime
     :members:
     :no-index:
