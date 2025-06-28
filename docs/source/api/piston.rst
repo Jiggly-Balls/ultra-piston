@@ -1,7 +1,7 @@
-.. currentmodule:: ultra_piston
+.. currentmodule:: ultra_piston.piston
 
 Piston
 ======
 
-.. autoclass:: PistonClient
+.. autoclass:: ultra_piston.PistonClient
     :members:
