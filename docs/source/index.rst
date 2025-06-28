@@ -6,11 +6,12 @@ started with the Game-State library.
 
 About the Project
 -----------------
-An all-in-one wrapper for the [Piston API](https://piston.readthedocs.io/en/latest/) in Python.
+An all-in-one wrapper for the `Piston API <https://piston.readthedocs.io/en/latest/>`_ in Python.
 
 Features
 --------
 This library offers robust customization options and essential functionalities, including:
+
 - Complete 100% API coverage
 - Support for both synchronous and asynchronous methods
 - Automatic rate limit handling
@@ -22,8 +23,7 @@ This library offers robust customization options and essential functionalities, 
 
 Getting Started
 ---------------
-Check out the guide on how to setup a pygame project with game state along with
-the API reference.
+Check out the guide which explores the endpoint methods of the wrapper along with the API reference.
 
    .. toctree::
       
