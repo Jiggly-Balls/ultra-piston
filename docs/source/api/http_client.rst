@@ -4,5 +4,5 @@ HTTP Client
 ===========
 
 .. autoclass:: ultra_piston.http_clients.AbstractHTTPClient
-    :private-members:
-    :members:
+  :private-members:
+  :members:
