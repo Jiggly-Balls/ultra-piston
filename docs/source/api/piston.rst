@@ -3,5 +3,5 @@
 Piston
 ======
 
-.. autoclass:: ultra_piston.PistonClient
+.. autoclass:: ultra_piston.piston.PistonClient
     :members:
