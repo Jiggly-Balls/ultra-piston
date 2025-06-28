@@ -2,4 +2,6 @@ sphinx==8.2.3
 furo==2024.8.6
 numpydoc==1.8.0
 sphinx-autodoc-typehints==3.2.0
-pydantic==2.11.7
+aiocache>=0.12.3
+httpx>=0.28.1
+pydantic>=2.11.7
