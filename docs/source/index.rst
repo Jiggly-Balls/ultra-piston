@@ -1,13 +1,21 @@
-Welcome to the Game-State Documentation!
-========================================
+Welcome to the Ultra Piston Documentation!
+==========================================
 
 This documentation will serve as an API reference as well as a guide to getting
 started with the Game-State library.
 
 About the Project
 -----------------
-This project was made to handle different screen in ``pygame`` / ``pygame-ce``
-in an organized manner via python's OOP.
+An all-in-one wrapper for the [Piston API](https://piston.readthedocs.io/en/latest/) in Python.
+
+Features
+--------
+This library offers robust customization options and essential functionalities, including:
+- Complete 100% API coverage
+- Support for both synchronous and asynchronous methods
+- Automatic rate limit handling
+- Rich data models
+- Pluggable HTTP driver system — implement your own custom driver for handling requests
 
 :Author: Jiggly Balls
 :License: MIT License
