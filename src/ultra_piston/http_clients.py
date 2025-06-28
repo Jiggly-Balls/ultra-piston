@@ -52,7 +52,7 @@ class AbstractHTTPClient(ABC):
         | The name of the HTTP driver or implementation used.
     rate_limit : Optional[Union[int, float]]
         | Ratelimit to set for the dispatched requests.
-        | Takes in a integer / float of the amount of delay between each request.
+        | Takes in a integer / float of the amount of delay (in seconds) between each request.
         | Defaults to 1 request per second.
     base_url : Optional[str]
         | The base URL for the API endpoint.
