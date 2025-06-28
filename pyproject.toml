@@ -4,6 +4,35 @@ version = "1.0.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: Pydantic",
+    "Framework :: Pydantic :: 2",
+    "Framework :: Pytest",
+    "Framework :: Sphinx",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Documentation :: Sphinx",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Text Processing :: Markup :: reStructuredText",
+    "Topic :: Utilities",
+    "Typing :: Typed"
+]
+
+[project.urls]
+Source = "https://github.com/Jiggly-Balls/ultra-piston"
+Issues = "https://github.com/Jiggly-Balls/ultra-piston/issues"
+Stars = "https://github.com/Jiggly-Balls/ultra-piston/stargazers"
+
 dependencies = [
     "aiocache>=0.12.3",
     "autodoc-pydantic>=2.2.0",
