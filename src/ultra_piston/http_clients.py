@@ -67,18 +67,17 @@ class AbstractHTTPClient(ABC):
         self.headers: Optional[Dict[str, str]] = None
 
     def _get_rate_limit(self) -> Union[int, float]:
-        """
-        Retrieve the configured request rate limit.
+        r"""Retrieve the configured request rate limit.
 
         Returns
         -------
         Union[int, float]
-            The rate limit value.
+            | The rate limit value.
 
         Raises
         ------
         MissingDataError
-            If no rate limit is set.
+            | If no rate limit is set.
         """
 
         if not self.rate_limit:
@@ -88,18 +87,17 @@ class AbstractHTTPClient(ABC):
         return self.rate_limit
 
     def _get_base_url(self) -> str:
-        """
-        Retrieve the configured base URL for the API.
+        r"""Retrieve the configured base URL for the API.
 
         Returns
         -------
         str
-            The base URL.
+            | The base URL.
 
         Raises
         ------
         MissingDataError
-            If no base URL is set.
+            | If no base URL is set.
         """
 
         if not self.base_url:
@@ -109,18 +107,17 @@ class AbstractHTTPClient(ABC):
         return self.base_url
 
     def _get_headers(self) -> Dict[str, str]:
-        """
-        Retrieve the default HTTP headers for requests.
+        r"""Retrieve the default HTTP headers for requests.
 
         Returns
         -------
         Dict[str, str]
-            The request headers.
+            | The request headers.
 
         Raises
         ------
         MissingDataError
-            If no headers are set.
+            | If no headers are set.
         """
 
         if not self.headers:
@@ -130,18 +127,17 @@ class AbstractHTTPClient(ABC):
         return self.headers
 
     def _get_http_payload(self, endpoint: str = "") -> Dict[str, Any]:
-        """
-        Construct the full HTTP payload with URL and headers.
+        r"""Construct the full HTTP payload with URL and headers.
 
         Parameters
         ----------
         endpoint : str, optional
-            The endpoint path to append to the base URL.
+            | The endpoint path to append to the base URL.
 
         Returns
         -------
         Dict[str, Any]
-            Dictionary containing the full URL and headers.
+            | Dictionary containing the full URL and headers.
         """
 
         BASE_URL = self._get_base_url() + endpoint
@@ -151,114 +147,108 @@ class AbstractHTTPClient(ABC):
 
     @abstractmethod
     def get(self, endpoint: str) -> Any:
-        """
-        Send a synchronous GET request to the given endpoint.
+        r"""Send a synchronous GET request to the given endpoint.
 
         Parameters
         ----------
         endpoint : str
-            The API endpoint to request.
+            | The API endpoint to request.
 
         Returns
         -------
         Any
-            The server response.
+            | The server response.
         """
 
     @abstractmethod
     async def get_async(self, endpoint: str) -> Any:
-        """
-        Send an asynchronous GET request to the given endpoint.
+        r"""Send an asynchronous GET request to the given endpoint.
 
         Parameters
         ----------
         endpoint : str
-            The API endpoint to request.
+            | The API endpoint to request.
 
         Returns
         -------
         Any
-            The server response.
+            | The server response.
         """
 
     @abstractmethod
     def post(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any:
-        """
-        Send a synchronous POST request with optional JSON data.
+        r"""Send a synchronous POST request with optional JSON data.
 
         Parameters
         ----------
         endpoint : str
-            The API endpoint to request.
+            | The API endpoint to request.
         json_data : dict, optional
-            The JSON payload to send.
+            | The JSON payload to send.
 
         Returns
         -------
         Any
-            The server response.
+            | The server response.
         """
 
     @abstractmethod
     async def post_async(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any:
-        """
-        Send an asynchronous POST request with optional JSON data.
+        r"""Send an asynchronous POST request with optional JSON data.
 
         Parameters
         ----------
         endpoint : str
-            The API endpoint to request.
+            | The API endpoint to request.
         json_data : dict, optional
-            The JSON payload to send.
+            | The JSON payload to send.
 
         Returns
         -------
         Any
-            The server response.
+            | The server response.
         """
 
     @abstractmethod
     def delete(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any:
-        """
-        Send a synchronous DELETE request with optional JSON data.
+        r"""Send a synchronous DELETE request with optional JSON data.
 
         Parameters
         ----------
         endpoint : str
-            The API endpoint to request.
+            | The API endpoint to request.
         json_data : dict, optional
-            The JSON payload to send.
+            | The JSON payload to send.
 
         Returns
         -------
         Any
-            The server response.
+            | The server response.
         """
 
     @abstractmethod
     async def delete_async(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any:
-        """
-        Send an asynchronous DELETE request with optional JSON data.
+        r"""Send an asynchronous DELETE request with optional JSON data.
 
         Parameters
         ----------
         endpoint : str
-            The API endpoint to request.
+            | The API endpoint to request.
         json_data : dict, optional
-            The JSON payload to send.
+            | The JSON payload to send.
 
         Returns
         -------
         Any
-            The server response.
+            | The server response.
         """
 
 
