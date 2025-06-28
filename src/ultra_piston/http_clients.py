@@ -76,7 +76,7 @@ class AbstractHTTPClient(ABC):
 
         Raises
         ------
-        MissingDataError
+        :py:exc:`ultra_piston.errors.MissingDataError`
             | If no rate limit is set.
         """
 
@@ -96,7 +96,7 @@ class AbstractHTTPClient(ABC):
 
         Raises
         ------
-        MissingDataError
+        :py:exc:`ultra_piston.errors.MissingDataError`
             | If no base URL is set.
         """
 
@@ -116,7 +116,7 @@ class AbstractHTTPClient(ABC):
 
         Raises
         ------
-        MissingDataError
+        :py:exc:`ultra_piston.errors.MissingDataError`
             | If no headers are set.
         """
 
@@ -131,13 +131,18 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str, optional
+        endpoint : str
             | The endpoint path to append to the base URL.
 
         Returns
         -------
         Dict[str, Any]
             | Dictionary containing the full URL and headers.
+
+        Raises
+        ------
+        :py:exc:`ultra_piston.errors.MissingDataError`
+            | If no base URL or headers are set.
         """
 
         BASE_URL = self._get_base_url() + endpoint
