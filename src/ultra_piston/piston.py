@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import functools
 import importlib
+import logging
 from typing import TYPE_CHECKING
 
 from aiocache import cached
@@ -16,6 +17,7 @@ if TYPE_CHECKING:
 
 
 __all__ = ("PistonClient",)
+_logger = logging.getLogger(__name__)
 
 
 class PistonClient:
@@ -79,7 +81,13 @@ class PistonClient:
                     driver_version = ".".join(version_info)
                 except:  # noqa: E722
                     pass
-        driver_version = driver_version or "UNKOWN_VERSION"
+
+        if not driver_version:
+            driver_version = "UNKOWN_VERSION"
+            _logger.warning(
+                "Couldn't determine driver version of library: %s.",
+                driver_lib.__name__,
+            )
 
         if not base_url.endswith("/"):
             base_url += "/"
@@ -115,6 +123,11 @@ class PistonClient:
 
         .. warning::
             This method is not available for the public API.
+
+        Raises
+        ------
+        :py:exc:`ultra_piston.errors.NotFoundError`
+            | If the endpoint is inaccessible.
         """
 
         package_data = self._http_client.get("packages")
@@ -125,6 +138,11 @@ class PistonClient:
 
         .. warning::
             This method is not available for the public API.
+
+        Raises
+        ------
+        :py:exc:`ultra_piston.errors.NotFoundError`
+            | If the endpoint is inaccessible.
         """
 
         package_data = await self._http_client.get_async("packages")
@@ -142,6 +160,11 @@ class PistonClient:
             | The name of the programming language.
         version
             | The version of the language.
+
+        Raises
+        ------
+        :py:exc:`ultra_piston.errors.NotFoundError`
+            | If the endpoint is inaccessible.
         """
 
         json_data: Dict[str, str] = {
@@ -162,6 +185,11 @@ class PistonClient:
             | The name of the programming language.
         version
             | The version of the language.
+
+        Raises
+        ------
+        :py:exc:`ultra_piston.errors.NotFoundError`
+            | If the endpoint is inaccessible.
         """
         json_data: Dict[str, str] = {
             "language": language,
@@ -302,6 +330,11 @@ class PistonClient:
 
         .. warning::
             This method is not available for the public API.
+
+        Raises
+        ------
+        :py:exc:`ultra_piston.errors.NotFoundError`
+            | If the endpoint is inaccessible.
         """
 
         json_data: Dict[str, str] = {
@@ -315,6 +348,11 @@ class PistonClient:
 
         .. warning::
             This method is not available for the public API.
+
+        Raises
+        ------
+        :py:exc:`ultra_piston.errors.NotFoundError`
+            | If the endpoint is inaccessible.
         """
 
         json_data: Dict[str, str] = {
