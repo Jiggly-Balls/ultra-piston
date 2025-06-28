@@ -1,0 +1,4 @@
+aiocache
+httpx
+pytest
+pytest-asyncio
