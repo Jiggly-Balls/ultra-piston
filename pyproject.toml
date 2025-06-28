@@ -17,6 +17,7 @@ dev = [
     "furo>=2024.8.6",
     "isort>=6.0.1",
     "numpydoc>=1.8.0",
+    "pytest>=8.4.1",
     "ruff>=0.11.13",
     "sphinx>=8.2.3",
     "sphinx-autobuild>=2024.10.3",
