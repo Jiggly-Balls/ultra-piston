@@ -63,7 +63,7 @@ modindex_common_prefix = ["src."]
 html_title = f"{project} v{version} Documentation"
 html_theme = "furo"
 html_theme_options = {
-    "source_repository": "https://github.com/Jiggly-Balls/game-state",
+    "source_repository": "https://github.com/Jiggly-Balls/ultra-piston",
     "source_branch": "main",
     "source_directory": "docs/source/",
     "top_of_page_buttons": ["view", "edit"],
