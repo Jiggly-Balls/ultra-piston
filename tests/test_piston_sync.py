@@ -20,7 +20,7 @@ def test_endpoint_methods() -> None:
 
     to_be_printed: str = "Hello World"
     code_file = File(content=f"print('{to_be_printed}')")
-    executed_output = piston.post_execute("python3", "3.10.0", [code_file])
+    executed_output = piston.post_execute("python3", "3.10.0", code_file)
 
     assert executed_output.run.output.strip() == to_be_printed
 
