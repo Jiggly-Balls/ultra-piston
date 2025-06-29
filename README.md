@@ -67,7 +67,7 @@ asyncio.run(main())
 
 ---
 
-## ⛓️‍💥 Links
+## 🔗 Links
 
 Documentation - API Reference & Guide: https://ultra-piston.readthedocs.io/en/latest/index.html
 
