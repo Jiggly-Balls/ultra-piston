@@ -71,8 +71,6 @@ asyncio.run(main())
 
 Documentation - API Reference & Guide: https://ultra-piston.readthedocs.io/en/latest/index.html
 
----
-
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
