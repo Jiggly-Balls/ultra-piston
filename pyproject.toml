@@ -1,7 +1,10 @@
 [project]
 name = "ultra-piston"
 version = "1.0.0"
-description = "Add your description here"
+authors = [
+  { name="Jiggly Balls", email="jigglyballs9000@gmail.com" },
+]
+description = "An all-in-one API wrapper for the Piston API in Python"
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [
@@ -35,15 +38,9 @@ dependencies = [
 
 [project.urls]
 Source = "https://github.com/Jiggly-Balls/ultra-piston"
+Documentation = "https://game-state.readthedocs.io/en/latest/index.html"
 Issues = "https://github.com/Jiggly-Balls/ultra-piston/issues"
 Stars = "https://github.com/Jiggly-Balls/ultra-piston/stargazers"
-
-dependencies = [
-    "aiocache>=0.12.3",
-    "autodoc-pydantic>=2.2.0",
-    "httpx>=0.28.1",
-    "pydantic>=2.11.7",
-]
 
 [dependency-groups]
 dev = [
