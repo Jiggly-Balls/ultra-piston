@@ -70,6 +70,7 @@ asyncio.run(main())
 ## 🔗 Links
 
 Documentation - API Reference & Guide: https://ultra-piston.readthedocs.io/en/latest/index.html
+PyPI Page: https://pypi.org/project/ultra-piston/
 
 ## 📄 License
 
