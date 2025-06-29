@@ -165,6 +165,9 @@ class PistonClient:
         ------
         :py:exc:`ultra_piston.errors.NotFoundError`
             | If the endpoint is inaccessible.
+
+        :py:exc:`ultra_piston.errors.BadRequestError`
+            | Raised if an invalid version or language was passed.
         """
 
         json_data: Dict[str, str] = {
@@ -190,6 +193,9 @@ class PistonClient:
         ------
         :py:exc:`ultra_piston.errors.NotFoundError`
             | If the endpoint is inaccessible.
+
+        :py:exc:`ultra_piston.errors.BadRequestError`
+            | Raised if an invalid version or language was passed.
         """
         json_data: Dict[str, str] = {
             "language": language,
@@ -241,6 +247,11 @@ class PistonClient:
         Returns
         -------
         | Returns the ExecutionOutput data containing various data related to the ran code.
+
+        Raises
+        ------
+        :py:exc:`ultra_piston.errors.BadRequestError`
+            | Raised if an invalid version or language was passed.
         """
 
         json_data: Dict[str, Any] = {
@@ -304,6 +315,11 @@ class PistonClient:
         Returns
         -------
         Returns the ExecutionOutput data containing various data related to the ran code.
+
+        Raises
+        ------
+        :py:exc:`ultra_piston.errors.BadRequestError`
+            | Raised if an invalid version or language was passed.
         """
 
         json_data: Dict[str, Any] = {
@@ -335,6 +351,9 @@ class PistonClient:
         ------
         :py:exc:`ultra_piston.errors.NotFoundError`
             | If the endpoint is inaccessible.
+
+        :py:exc:`ultra_piston.errors.BadRequestError`
+            | Raised if an invalid version or language was passed.
         """
 
         json_data: Dict[str, str] = {
@@ -353,6 +372,9 @@ class PistonClient:
         ------
         :py:exc:`ultra_piston.errors.NotFoundError`
             | If the endpoint is inaccessible.
+
+        :py:exc:`ultra_piston.errors.BadRequestError`
+            | Raised if an invalid version or language was passed.
         """
 
         json_data: Dict[str, str] = {
