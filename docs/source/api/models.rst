@@ -1,28 +1,28 @@
-.. currentmodule:: ultra_piston.models
+.. currentmodule:: ultra_piston
 
 Models
 ======
 
-.. autoclass:: ultra_piston.models.Runtime
+.. autoclass:: ultra_piston.Runtime
   :members:
   :no-index:
 
-.. autoclass:: ultra_piston.models.ExecutionOutput
+.. autoclass:: ultra_piston.ExecutionOutput
   :members:
   :no-index:
 
-.. autoclass:: ultra_piston.models.File
+.. autoclass:: ultra_piston.File
   :members:
   :no-index:
 
-.. autoclass:: ultra_piston.models.Package
+.. autoclass:: ultra_piston.Package
   :members:
   :no-index:
 
-.. autoclass:: ultra_piston.models.RunStage
+.. autoclass:: ultra_piston.RunStage
   :members:
   :no-index:
 
-.. autoclass:: ultra_piston.models.Runtime
+.. autoclass:: ultra_piston.Runtime
   :members:
   :no-index:
