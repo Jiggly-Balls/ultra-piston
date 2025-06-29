@@ -51,9 +51,12 @@ dev = [
     "pytest>=8.4.1",
     "pytest-asyncio>=1.0.0",
     "ruff>=0.11.13",
+    "setuptools>=80.9.0",
     "sphinx==8.2.3",
     "sphinx-autobuild>=2024.10.3",
     "sphinx-autodoc-typehints>=3.2.0",
+    "twine>=6.1.0",
+    "wheel>=0.45.1",
 ]
 
 [tool.isort]
