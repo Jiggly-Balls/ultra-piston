@@ -10,6 +10,7 @@ Exceptions
       * InternalError
           * MissingDataError
       * ServerError
+          * BadRequestError
           * TooManyRequestsError
           * InternalServerError
           * NotFoundError
@@ -25,6 +26,9 @@ Exceptions
   :members:
 
 .. autoclass:: ultra_piston.errors.MissingDataError
+  :members:
+
+.. autoclass:: ultra_piston.errors.BadRequestError
   :members:
 
 .. autoclass:: ultra_piston.errors.TooManyRequestsError
