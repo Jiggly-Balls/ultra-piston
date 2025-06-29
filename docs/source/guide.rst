@@ -61,10 +61,8 @@ Executing code via Piston API
       content='print("Hello world")',  # The code to be executed
    )
 
-   executed_state = piston.post_execute("python3", "3.10.0", [code_file])
+   executed_state = piston.post_execute("python3", "3.10.0", code_file)
    pprint(executed_state)  # The entire ExecutionOutput object containing various data
-
-   print()
 
    code_output = executed_state.run.output
    print(code_output)  # The executed output of the code

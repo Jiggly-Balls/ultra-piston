@@ -38,7 +38,7 @@ client = PistonClient()
 result = client.post_execute(
     language="python3",
     version="3.10.0",
-    files=[File(content='print("Hello from ultra-piston!")')],
+    file=File(content='print("Hello from ultra-piston!")'),
 )
 
 print(result.run.output)
@@ -57,7 +57,7 @@ async def main():
     result = await client.post_execute_async(
         language="python3",
         version="3.10.0",
-        files=[File(content='print("Hello from ultra-piston!")')],
+        file=File(content='print("Hello from ultra-piston!")'),
     )
 
     print(result.run.output)

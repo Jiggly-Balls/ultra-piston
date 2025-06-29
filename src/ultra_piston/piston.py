@@ -201,7 +201,7 @@ class PistonClient:
         self,
         language: str,
         version: str,
-        files: List[File],
+        file: File,
         stdin: Optional[str] = None,
         args: Optional[List[str]] = None,
         compile_timeout: Union[float, int] = 10000,
@@ -217,8 +217,8 @@ class PistonClient:
             | The name of the programming language.
         version
             | The version of the language.
-        files
-            | List of File(s) containing the code.
+        file
+            | The file containing the code to be executed.
         stdin
             | Text to pass into stdin of the program.
         args
@@ -246,7 +246,7 @@ class PistonClient:
         json_data: Dict[str, Any] = {
             "language": language,
             "version": version,
-            "files": [file.model_dump() for file in files],
+            "files": [file.model_dump()],
             "compile_timeout": compile_timeout,
             "run_timeout": run_timeout,
             "compile_memory_limit": compile_memory_limit,
@@ -264,7 +264,7 @@ class PistonClient:
         self,
         language: str,
         version: str,
-        files: List[File],
+        file: File,
         stdin: Optional[str] = None,
         args: Optional[List[str]] = None,
         compile_timeout: Union[float, int] = 10000,
@@ -281,7 +281,7 @@ class PistonClient:
         version
             | The version of the language.
         files
-            | List of File(s) containing the code.
+            | The file containing the code to be executed.
         stdin
             | Text to pass into stdin of the program.
         args
@@ -309,7 +309,7 @@ class PistonClient:
         json_data: Dict[str, Any] = {
             "language": language,
             "version": version,
-            "files": [file.model_dump() for file in files],
+            "files": [file.model_dump()],
             "compile_timeout": compile_timeout,
             "run_timeout": run_timeout,
             "compile_memory_limit": compile_memory_limit,
