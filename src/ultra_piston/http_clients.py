@@ -13,6 +13,7 @@ except ModuleNotFoundError:
     pass
 
 from .errors import (
+    BadRequestError,
     InternalServerError,
     MissingDataError,
     NotFoundError,
@@ -268,6 +269,9 @@ class HTTPXClient(AbstractHTTPClient):
     def _validate_response_status(self, response: Response) -> Any:
         if 300 > response.status_code > 199:
             return response.json()
+
+        elif response.status_code == 400:
+            raise BadRequestError(str(response.url))
 
         elif response.status_code == 404:
             raise NotFoundError(str(response.url))
