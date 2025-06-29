@@ -50,6 +50,32 @@ class MissingDataError(InternalError):
     r"""Raised when the required data is not set or is missing."""
 
 
+class BadRequestError(ServerError):
+    r"""Raised due to passing invalid arguments.
+
+    Attributes
+    ----------
+    endpoint : Optional[str]
+        | The endpoint URL.
+    status_code : int
+        | The status code of the server response.
+    """
+
+    def __init__(
+        self, endpoint: Optional[str] = None, message: Optional[str] = None
+    ) -> None:
+        STATUS_CODE = 400
+        message = message or (
+            "Raised due to passing invalid arguments. "
+            f"status_code={STATUS_CODE} | endpoint={endpoint}"
+        )
+        super().__init__(
+            message,
+            endpoint=endpoint,
+            status_code=STATUS_CODE,
+        )
+
+
 class TooManyRequestsError(ServerError):
     r"""Raised due to sending too many requests in a short interval.
 
