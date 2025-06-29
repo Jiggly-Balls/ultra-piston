@@ -11,6 +11,7 @@ __all__ = (
     "InternalError",
     "ServerError",
     "MissingDataError",
+    "BadRequestError",
     "TooManyRequestsError",
     "InternalServerError",
     "NotFoundError",
