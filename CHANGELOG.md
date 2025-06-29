@@ -11,7 +11,7 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Added main interface client: `ultra_piston.PistonClient`
 - Added ABC `ultra_piston.http_clients.AbstractHTTPClient`
-- Added data model `ultra_piston.http_clients.HTTPXClient`
+- Added HTTP driver `ultra_piston.http_clients.HTTPXClient`
 - Added data model `ultra_piston.Runtime`
 - Added data model `ultra_piston.Package`
 - Added data model `ultra_piston.File`
