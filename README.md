@@ -1,3 +1,11 @@
+[![PyPI](https://img.shields.io/pypi/v/ultra-piston.svg?style=for-the-badge&logo=pypi&color=orange&logoColor=white)](https://pypi.org/project/ultra-piston/)
+[![Github Releases](https://img.shields.io/github/v/release/Jiggly-Balls/ultra-piston?color=orange&include_prereleases&label=Latest%20Release&logo=github&sort=semver&style=for-the-badge&logoColor=white)](https://github.com/Jiggly-Balls/ultra-piston/releases)
+[![Downloads](https://img.shields.io/pypi/dm/ultra-piston?label=Downloads%20/%20Month&color=orange&logo=pypi&logoColor=white&style=for-the-badge)](https://pypi.org/project/ultra-piston/)
+[![PyPI Downloads](https://img.shields.io/pepy/dt/ultra-piston?label=Total%20Downloads&color=orange&logo=pypi&logoColor=white&style=for-the-badge)](https://pepy.tech/projects/ultra-piston)
+[![License](https://img.shields.io/github/license/Jiggly-Balls/ultra-piston?color=orange&logo=c&logoColor=white&style=for-the-badge)](https://github.com/Jiggly-Balls/ultra-piston/blob/main/LICENSE)
+[![Docs](https://img.shields.io/readthedocs/ultra-piston?color=orange&logo=readthedocs&logoColor=white&style=for-the-badge)](https://ultra-piston.readthedocs.io/en/latest/)
+![Versions](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue?color=orange&logo=python&logoColor=white&style=for-the-badge)
+
 # Ultra Piston
 An all-in-one wrapper for the [Piston API](https://piston.readthedocs.io/en/latest/) in Python.
 
@@ -69,8 +77,8 @@ asyncio.run(main())
 
 ## 🔗 Links
 
-Documentation - API Reference & Guide: https://ultra-piston.readthedocs.io/en/latest/index.html
-PyPI Page: https://pypi.org/project/ultra-piston/
+- API Reference & Guide: https://ultra-piston.readthedocs.io/en/latest/index.html/
+- PyPI Page: https://pypi.org/project/ultra-piston/
 
 ## 📄 License
 
