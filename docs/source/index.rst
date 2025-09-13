@@ -18,7 +18,7 @@ This library offers robust customization options and essential functionalities, 
 - Rich data models
 - Pluggable HTTP driver system — implement your own custom driver for handling requests
 
-:Author: Jiggly Balls
+:Author: Krish Mohan M.
 :License: MIT License
 
 Getting Started
