@@ -44,13 +44,10 @@ Stars = "https://github.com/Jiggly-Balls/ultra-piston/stargazers"
 
 [dependency-groups]
 dev = [
-    "basedpyright>=1.29.4",
     "furo>=2024.8.6",
-    "isort>=6.0.1",
     "numpydoc>=1.8.0",
     "pytest>=8.4.1",
     "pytest-asyncio>=1.0.0",
-    "ruff>=0.11.13",
     "setuptools>=80.9.0",
     "sphinx==8.2.3",
     "sphinx-autobuild>=2024.10.3",
