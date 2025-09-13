@@ -56,14 +56,11 @@ dev = [
     "wheel>=0.45.1",
 ]
 
-[tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-
 [tool.ruff]
 line-length = 79
-lint.extend-select = ["ANN"]
-lint.ignore = ["ANN401"]
+lint.extend-select = ["ANN", "I"]
+lint.ignore = ["ANN401", "F"]
+lint.fixable = ["I", "F401"]
 
 [tool.ruff.format]
 quote-style = "double"
