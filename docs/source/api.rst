@@ -11,3 +11,4 @@ The following section outlines the API of Ultra Piston.
   api/models
   api/http_client
   api/exceptions
+  api/utils
