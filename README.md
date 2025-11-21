@@ -6,7 +6,7 @@
 [![PyPI Downloads](https://img.shields.io/pepy/dt/ultra-piston?label=Total%20Downloads&color=orange&logo=pypi&logoColor=white&style=for-the-badge)](https://pepy.tech/projects/ultra-piston)
 [![License](https://img.shields.io/github/license/Jiggly-Balls/ultra-piston?color=orange&logo=c&logoColor=white&style=for-the-badge)](https://github.com/Jiggly-Balls/ultra-piston/blob/main/LICENSE)
 [![Docs](https://img.shields.io/readthedocs/ultra-piston?color=orange&logo=readthedocs&logoColor=white&style=for-the-badge)](https://ultra-piston.readthedocs.io/en/latest/)
-![Versions](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue?color=orange&logo=python&logoColor=white&style=for-the-badge)
+![Versions](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue?color=orange&logo=python&logoColor=white&style=for-the-badge)
 
 </div>
 
