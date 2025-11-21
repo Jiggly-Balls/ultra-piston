@@ -254,7 +254,7 @@ class PistonClient:
             | Raised if an invalid version or language was passed.
         """
 
-        json_data: Dict[str, Any] = {
+        json_data: Dict[str, object] = {
             "language": language,
             "version": version,
             "files": [file.model_dump()],
