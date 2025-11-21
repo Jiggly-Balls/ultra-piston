@@ -32,9 +32,9 @@ class ServerError(BasePistonError):
 
     Attributes
     ----------
-    endpoint : Optional[str]
+    endpoint
         | The endpoint URL.
-    status_code : int
+    status_code
         | The status code of the server response.
     """
 
@@ -56,9 +56,9 @@ class BadRequestError(ServerError):
 
     Attributes
     ----------
-    endpoint : Optional[str]
+    endpoint
         | The endpoint URL.
-    status_code : int
+    status_code
         | The status code of the server response.
     """
 
@@ -82,9 +82,9 @@ class TooManyRequestsError(ServerError):
 
     Attributes
     ----------
-    endpoint : Optional[str]
+    endpoint
         | The endpoint URL.
-    status_code : int
+    status_code
         | The status code of the server response.
     """
 
@@ -108,9 +108,9 @@ class InternalServerError(ServerError):
 
     Attributes
     ----------
-    endpoint : Optional[str]
+    endpoint
         | The endpoint URL.
-    status_code : int
+    status_code
         | The status code of the server response.
     """
 
