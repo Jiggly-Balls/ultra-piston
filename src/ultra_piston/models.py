@@ -11,14 +11,14 @@ __all__ = (
     "ExecutionOutput",
 )
 
+BaseModel.__init__.__doc__ = None
+
 
 class Runtime(BaseModel):
-    """
-    Represents a supported language runtime.
+    r"""Represents a supported language runtime.
 
     Attributes
     ----------
-
     language
         | The programming language.
     version
@@ -36,12 +36,10 @@ class Runtime(BaseModel):
 
 
 class Package(BaseModel):
-    """
-    Represents a package or dependency available for a specific language.
+    r"""Represents a package or dependency available for a specific language.
 
     Attributes
     ----------
-
     language
         | The programming language the package is for.
     language_version
@@ -56,12 +54,10 @@ class Package(BaseModel):
 
 
 class File(BaseModel):
-    """
-    Represents a file to be sent for execution.
+    r"""Represents a file to be sent for execution.
 
     Attributes
     ----------
-
     name
         | The name of the file (e.g., "main.py").
     content
@@ -76,12 +72,10 @@ class File(BaseModel):
 
 
 class RunStage(BaseModel):
-    """
-    Represents the result of the runtime execution stage.
+    r"""Represents the result of the runtime execution stage.
 
     Attributes
     ----------
-
     code
         | Exit code of the execution process.
     output
@@ -102,12 +96,10 @@ class RunStage(BaseModel):
 
 
 class CompileStage(BaseModel):
-    """
-    Represents the result of the compilation stage, if applicable.
+    r"""Represents the result of the compilation stage, if applicable.
 
     Attributes
     ----------
-
     code
         | Exit code of the compiler.
     output
@@ -128,12 +120,10 @@ class CompileStage(BaseModel):
 
 
 class ExecutionOutput(BaseModel):
-    """
-    Represents the complete output from a code execution request.
+    r"""Represents the complete output from a code execution request.
 
     Attributes
     ----------
-
     language
         | The language used to execute the code.
     version

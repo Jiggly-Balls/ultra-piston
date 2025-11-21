@@ -3,26 +3,26 @@
 Models
 ======
 
-.. autoclass:: ultra_piston.Runtime
-  :members:
+.. autoclass:: ultra_piston.CompileStage
+  :members: code, output, stderr, stdout, signal
   :no-index:
 
 .. autoclass:: ultra_piston.ExecutionOutput
-  :members:
+  :members: language, version, run, compile, compile_memory_limit, compile_timeout
   :no-index:
 
 .. autoclass:: ultra_piston.File
-  :members:
+  :members: name, content, encoding
   :no-index:
 
 .. autoclass:: ultra_piston.Package
-  :members:
+  :members: language, language_version, installed
   :no-index:
 
 .. autoclass:: ultra_piston.RunStage
-  :members:
+  :members: code, output, stderr, stdout, signal
   :no-index:
 
 .. autoclass:: ultra_piston.Runtime
-  :members:
+  :members: language, version, aliases, runtime
   :no-index:
