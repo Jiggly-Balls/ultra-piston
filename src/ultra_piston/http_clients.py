@@ -74,8 +74,7 @@ class AbstractHTTPClient(ABC):
 
         Returns
         -------
-        Union[int, float]
-            | The rate limit value.
+        The rate limit value.
 
         Raises
         ------
@@ -94,8 +93,7 @@ class AbstractHTTPClient(ABC):
 
         Returns
         -------
-        str
-            | The base URL.
+        The base URL.
 
         Raises
         ------
@@ -114,8 +112,7 @@ class AbstractHTTPClient(ABC):
 
         Returns
         -------
-        Dict[str, str]
-            | The request headers.
+        The request headers.
 
         Raises
         ------
@@ -134,13 +131,12 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The endpoint path to append to the base URL.
 
         Returns
         -------
-        Dict[str, Any]
-            | Dictionary containing the full URL and headers.
+        Dictionary containing the full URL and headers.
 
         Raises
         ------
@@ -159,13 +155,12 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response.
         """
 
     @abstractmethod
@@ -174,13 +169,12 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response.
         """
 
     @abstractmethod
@@ -191,15 +185,14 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
-        json_data : dict, optional
+        json_data
             | The JSON payload to send.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response.
         """
 
     @abstractmethod
@@ -210,15 +203,14 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
-        json_data : dict, optional
+        json_data
             | The JSON payload to send.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response.
         """
 
     @abstractmethod
@@ -229,15 +221,14 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
-        json_data : dict, optional
+        json_data
             | The JSON payload to send.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response.
         """
 
     @abstractmethod
@@ -248,15 +239,14 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
-        json_data : dict, optional
+        json_data
             | The JSON payload to send.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response
         """
 
 
