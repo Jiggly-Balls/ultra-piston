@@ -7,11 +7,13 @@
 ![Versions](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue?color=orange&logo=python&logoColor=white&style=for-the-badge)
 
 # Ultra Piston
+
 An all-in-one wrapper for the [Piston API](https://piston.readthedocs.io/en/latest/) in Python.
 
 ## ✨ Features
 
 This library offers robust customization options and essential functionalities, including:
+
 - Complete 100% API coverage
 - Rich data models
 - Support for both synchronous and asynchronous methods
@@ -25,11 +27,13 @@ This library offers robust customization options and essential functionalities, 
 This library supports python versions `3.10` and higher.
 
 To install ultra-piston via pip-
+
 ```
 (.venv) $ pip install ultra_piston
 ```
 
 Or by uv-
+
 ```
 $ uv add ultra_piston
 ```
