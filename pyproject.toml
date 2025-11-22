@@ -1,7 +1,7 @@
 [project]
 name = "ultra-piston"
 version = "1.0.1"
-authors = [{ name = "Jiggly Balls", email = "jigglyballs9000@gmail.com" }]
+authors = [{ name = "Krish Mohan M.", email = "jigglyballs9000@gmail.com" }]
 description = "An all-in-one API wrapper for the Piston API in Python"
 readme = "README.md"
 requires-python = ">=3.11"

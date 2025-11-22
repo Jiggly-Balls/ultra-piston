@@ -25,9 +25,9 @@ __all__ = (
 
 __version__ = "1.0.1"
 __title__ = "ultra-piston"
-__author__ = "Jiggly-Balls"
+__author__ = "Krish Mohan M."
 __license__ = "MIT"
-__copyright__ = "Copyright 2025-present Jiggly Balls"
+__copyright__ = "Copyright 2025-present, Krish Mohan M."
 
 
 class VersionInfo(NamedTuple):
