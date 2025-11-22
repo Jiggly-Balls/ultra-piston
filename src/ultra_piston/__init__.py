@@ -23,7 +23,7 @@ __all__ = (
     "PistonClient",
 )
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __title__ = "ultra-piston"
 __author__ = "Jiggly-Balls"
 __license__ = "MIT"

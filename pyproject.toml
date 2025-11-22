@@ -1,6 +1,6 @@
 [project]
 name = "ultra-piston"
-version = "1.0.0"
+version = "1.0.1"
 authors = [{ name = "Jiggly Balls", email = "jigglyballs9000@gmail.com" }]
 description = "An all-in-one API wrapper for the Piston API in Python"
 readme = "README.md"
@@ -22,6 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Documentation :: Sphinx",
     "Topic :: Software Development :: Libraries",
     "Topic :: Text Processing :: Markup :: reStructuredText",
