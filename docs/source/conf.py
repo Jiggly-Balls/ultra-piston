@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.abspath("../../src/"))
 # -- Project information
 project = "ultra-piston"
 copyright = "2025-present, Jiggly Balls"
-author = "Jiggly Balls"
+author = "Krish Mohan M."
 
 # version = f"{version_info.major}.{version_info.minor}"
 # release = f"{version_info.major}.{version_info.minor}.{version_info.patch} - {version_info.releaselevel}"

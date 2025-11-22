@@ -1,9 +1,7 @@
 [project]
 name = "ultra-piston"
 version = "1.0.0"
-authors = [
-  { name="Jiggly Balls", email="jigglyballs9000@gmail.com" },
-]
+authors = [{ name = "Jiggly Balls", email = "jigglyballs9000@gmail.com" }]
 description = "An all-in-one API wrapper for the Piston API in Python"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -28,13 +26,9 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
     "Topic :: Text Processing :: Markup :: reStructuredText",
     "Topic :: Utilities",
-    "Typing :: Typed"
+    "Typing :: Typed",
 ]
-dependencies = [
-    "aiocache>=0.12.3",
-    "httpx>=0.28.1",
-    "pydantic>=2.11.7",
-]
+dependencies = ["aiocache>=0.12.3", "httpx>=0.28.1", "pydantic>=2.11.7"]
 
 [project.urls]
 Source = "https://github.com/Jiggly-Balls/ultra-piston"
@@ -44,16 +38,15 @@ Stars = "https://github.com/Jiggly-Balls/ultra-piston/stargazers"
 
 [dependency-groups]
 dev = [
-    "furo>=2024.8.6",
-    "numpydoc>=1.8.0",
-    "pytest>=8.4.1",
+    "basedpyright>=1.34.0",
+    "furo>=2025.9.25",
+    "numpydoc>=1.9.0",
+    "pytest>=9.0.1",
     "pytest-asyncio>=1.0.0",
-    "setuptools>=80.9.0",
+    "ruff>=0.14.6",
     "sphinx==8.2.3",
-    "sphinx-autobuild>=2024.10.3",
-    "sphinx-autodoc-typehints>=3.2.0",
-    "twine>=6.1.0",
-    "wheel>=0.45.1",
+    "sphinx-autobuild>=2025.8.25",
+    "sphinx-autodoc-typehints>=3.5.2",
 ]
 
 [tool.ruff]
@@ -88,13 +81,8 @@ reportUnnecessaryIsInstance = false
 reportImplicitStringConcatenation = false
 reportUnusedCallResult = false
 reportMissingTypeStubs = false
-reportAssignmentType = false
-reportRedeclaration = false
 reportAny = false
 reportExplicitAny = false
-reportUnknownVariableType = false
-reportDeprecated = false
 reportImplicitOverride = false
-reportUnusedParameter = false
-reportIncompatibleVariableOverride = false
+reportDeprecated = false
 reportPossiblyUnboundVariable = false

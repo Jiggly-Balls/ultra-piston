@@ -11,21 +11,21 @@ __all__ = (
     "ExecutionOutput",
 )
 
+BaseModel.__init__.__doc__ = None
+
 
 class Runtime(BaseModel):
-    """
-    Represents a supported language runtime.
+    r"""Represents a supported language runtime.
 
     Attributes
     ----------
-
-    language
+    language : :class:`str`
         | The programming language.
-    version
+    version : :class:`str`
         | The specific version of the language (e.g., "3.10.0").
-    aliases
+    aliases : List[:class:`str`]
         | Alternate names or shortcuts for the language.
-    runtime
+    runtime : :class:`Optional` [:class:`str`]
         | The runtime environment identifier, if applicable.
     """
 
@@ -36,17 +36,15 @@ class Runtime(BaseModel):
 
 
 class Package(BaseModel):
-    """
-    Represents a package or dependency available for a specific language.
+    r"""Represents a package or dependency available for a specific language.
 
     Attributes
     ----------
-
-    language
+    language : :class:`str`
         | The programming language the package is for.
-    language_version
+    language_version : :class:`str`
         | The version of the language the package is associated with.
-    installed
+    installed : :class:`bool`
         | Whether the package is installed and available.
     """
 
@@ -56,17 +54,15 @@ class Package(BaseModel):
 
 
 class File(BaseModel):
-    """
-    Represents a file to be sent for execution.
+    r"""Represents a file to be sent for execution.
 
     Attributes
     ----------
-
-    name
+    name : :class:`Optional` [:class:`str`]
         | The name of the file (e.g., "main.py").
-    content
+    content : :class:`str`
         | The raw contents of the file.
-    encoding
+    encoding : :class:`Literal["base64", "hex", "utf8"]`
         | The encoding format used for the content. Defaults to "utf8".
     """
 
@@ -76,21 +72,19 @@ class File(BaseModel):
 
 
 class RunStage(BaseModel):
-    """
-    Represents the result of the runtime execution stage.
+    r"""Represents the result of the runtime execution stage.
 
     Attributes
     ----------
-
-    code
+    code : :class:`Optional[:class:`int`]`
         | Exit code of the execution process.
-    output
+    output : :class:`str`
         | Combined standard output and or error.
-    stderr
+    stderr : :class:`str`
         | Standard error stream.
-    stdout
+    stdout : :class:`str`
         | Standard output stream.
-    signal
+    signal : :class:`Optional` [:class:`str`]
         | Signal that caused the process to terminate, if any.
     """
 
@@ -102,21 +96,19 @@ class RunStage(BaseModel):
 
 
 class CompileStage(BaseModel):
-    """
-    Represents the result of the compilation stage, if applicable.
+    r"""Represents the result of the compilation stage, if applicable.
 
     Attributes
     ----------
-
-    code
+    code : :class:`Optional` [:class:`int`]
         | Exit code of the compiler.
-    output
+    output : :class:`str`
         | Combined standard output and error from the compiler.
-    stderr
+    stderr : :class:`str`
         | Standard error stream from the compiler.
-    stdout
+    stdout : :class:`str`
         | Standard output stream from the compiler.
-    signal
+    signal : :class:`Optional` [:class:`str`]
         | Signal that caused the compiler process to terminate, if any.
     """
 
@@ -128,23 +120,21 @@ class CompileStage(BaseModel):
 
 
 class ExecutionOutput(BaseModel):
-    """
-    Represents the complete output from a code execution request.
+    r"""Represents the complete output from a code execution request.
 
     Attributes
     ----------
-
-    language
+    language : :class:`str`
         | The language used to execute the code.
-    version
+    version : :class:`str`
         | The language version used.
-    run
+    run : :py:class:`RunStage`
         | Output from the runtime execution stage.
-    compile
+    compile : :class:`Optional` [:py:class:`CompileStage`]
         | Output from the compilation stage, if compilation was required.
-    compile_memory_limit
+    compile_memory_limit : :class:`Optional` [:class:`int`]
         | Memory limit (in bytes) used during compilation.
-    compile_timeout
+    compile_timeout : :class:`Optional` [Union[:class:`int`, :class:`float`]]
         | Timeout (in milliseconds) for the compilation stage.
     """
 
