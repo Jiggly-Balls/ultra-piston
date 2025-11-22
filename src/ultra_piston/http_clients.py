@@ -20,9 +20,11 @@ from .errors import (
     TooManyRequestsError,
     UnexpectedStatusError,
 )
+from .utils import MISSING
 
 if TYPE_CHECKING:
     from asyncio import Queue
+    from types import CoroutineType
     from typing import (
         Any,
         Awaitable,
@@ -62,18 +64,17 @@ class AbstractHTTPClient(ABC):
     """
 
     def __init__(self) -> None:
-        self.driver: Optional[str] = None
-        self.rate_limit: Optional[Union[int, float]] = None
-        self.base_url: Optional[str] = None
-        self.headers: Optional[Dict[str, str]] = None
+        self.driver: str = MISSING
+        self.rate_limit: Union[int, float] = MISSING
+        self.base_url: str = MISSING
+        self.headers: Dict[str, str] = MISSING
 
     def _get_rate_limit(self) -> Union[int, float]:
         r"""Retrieve the configured request rate limit.
 
         Returns
         -------
-        Union[int, float]
-            | The rate limit value.
+        The rate limit value.
 
         Raises
         ------
@@ -81,7 +82,7 @@ class AbstractHTTPClient(ABC):
             | If no rate limit is set.
         """
 
-        if not self.rate_limit:
+        if self.rate_limit is MISSING:
             raise MissingDataError(
                 f"Missing valid value for the attribute `self.rate_limit` of {self.__class__}."
             )
@@ -92,8 +93,7 @@ class AbstractHTTPClient(ABC):
 
         Returns
         -------
-        str
-            | The base URL.
+        The base URL.
 
         Raises
         ------
@@ -101,7 +101,7 @@ class AbstractHTTPClient(ABC):
             | If no base URL is set.
         """
 
-        if not self.base_url:
+        if self.base_url is MISSING:
             raise MissingDataError(
                 f"Missing valid value for the attribute `self.base_url` of {self.__class__}."
             )
@@ -112,8 +112,7 @@ class AbstractHTTPClient(ABC):
 
         Returns
         -------
-        Dict[str, str]
-            | The request headers.
+        The request headers.
 
         Raises
         ------
@@ -121,7 +120,7 @@ class AbstractHTTPClient(ABC):
             | If no headers are set.
         """
 
-        if not self.headers:
+        if self.headers is MISSING:
             raise MissingDataError(
                 f"Missing valid value for the attribute `self.headers` of {self.__class__}."
             )
@@ -132,13 +131,12 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The endpoint path to append to the base URL.
 
         Returns
         -------
-        Dict[str, Any]
-            | Dictionary containing the full URL and headers.
+        Dictionary containing the full URL and headers.
 
         Raises
         ------
@@ -157,13 +155,12 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response.
         """
 
     @abstractmethod
@@ -172,13 +169,12 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response.
         """
 
     @abstractmethod
@@ -189,15 +185,14 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
-        json_data : dict, optional
+        json_data
             | The JSON payload to send.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response.
         """
 
     @abstractmethod
@@ -208,15 +203,14 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
-        json_data : dict, optional
+        json_data
             | The JSON payload to send.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response.
         """
 
     @abstractmethod
@@ -227,15 +221,14 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
-        json_data : dict, optional
+        json_data
             | The JSON payload to send.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response.
         """
 
     @abstractmethod
@@ -246,15 +239,14 @@ class AbstractHTTPClient(ABC):
 
         Parameters
         ----------
-        endpoint : str
+        endpoint
             | The API endpoint to request.
-        json_data : dict, optional
+        json_data
             | The JSON payload to send.
 
         Returns
         -------
-        Any
-            | The server response.
+        The server response
         """
 
 
@@ -291,7 +283,7 @@ class HTTPXClient(AbstractHTTPClient):
     def sync_ratelimit(func: Callable[P, R]) -> Callable[P, R]:
         @functools.wraps(func)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
-            instance: HTTPXClient = args[0]  # type: ignore -- VSC editor bug in showing reportAssignmentType error.
+            instance: HTTPXClient = args[0]  # pyright: ignore[reportAssignmentType]
 
             if instance._last_request:
                 now = datetime.now()
@@ -312,12 +304,12 @@ class HTTPXClient(AbstractHTTPClient):
 
     @staticmethod
     def async_ratelimit(
-        func: Callable[P, Awaitable[R]],
-    ) -> Callable[P, Awaitable[R]]:
+        func: Callable[P, CoroutineType[Any, Any, R]],
+    ) -> Callable[P, CoroutineType[Any, Any, R]]:
         @functools.wraps(func)
         async def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
             event_loop = asyncio.get_event_loop()
-            instance: HTTPXClient = args[0]  # type: ignore
+            instance: HTTPXClient = args[0]  # pyright: ignore[reportAssignmentType]
 
             if instance._last_request is not None:
                 now = datetime.now()
@@ -352,7 +344,7 @@ class HTTPXClient(AbstractHTTPClient):
         return self._validate_response_status(response=response)
 
     @async_ratelimit
-    async def get_async(self, endpoint: str) -> Any:  # pyright:ignore[reportIncompatibleMethodOverride]
+    async def get_async(self, endpoint: str) -> Any:
         payload = self._get_http_payload(endpoint)
 
         async with httpx.AsyncClient() as client:
@@ -372,7 +364,7 @@ class HTTPXClient(AbstractHTTPClient):
         return self._validate_response_status(response=response)
 
     @async_ratelimit
-    async def post_async(  # pyright:ignore[reportIncompatibleMethodOverride]
+    async def post_async(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any:
         payload = self._get_http_payload(endpoint)
@@ -397,7 +389,7 @@ class HTTPXClient(AbstractHTTPClient):
         return self._validate_response_status(response=response)
 
     @async_ratelimit
-    async def delete_async(  # pyright:ignore[reportIncompatibleMethodOverride]
+    async def delete_async(
         self, endpoint: str, json_data: Optional[Dict[Any, Any]] = None
     ) -> Any:
         payload = self._get_http_payload(endpoint)

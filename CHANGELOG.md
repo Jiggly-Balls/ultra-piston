@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and
 this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) when possible.
 
+## [Unreleased]
+
+### Added
+
+- Added `ultra_piston.utils.MISSING`
+
+### Fixed
+
+- Fixed various type annotation errors in `ultra_piston.http_clients`.
+- Fixed documentation of data models.
+
 ## [1.0.0] - 2025-06-29
 
 ### Added
